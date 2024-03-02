@@ -17,10 +17,10 @@ struct Persona
 };
 
 void menu() {
-    
+    printf("Bienvenido a esta app.");  
 }
 
 void main() {
-    
+    menu();
 
 }
