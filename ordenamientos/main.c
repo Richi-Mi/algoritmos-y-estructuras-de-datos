@@ -90,8 +90,24 @@ void ordenamientoSeleccion( struct Vector *vector ) {
     }
 
 }
+void merge( int* arreglo, int p, int q, int r ) {
+    int *n1, *n2, *arrL, *arrR, *i, *j, *k;
+    n1 = malloc( sizeof( int )); 
+
+}
+void mergeSort( int* arreglo, int p, int r ) {
+    if( p < r ) {
+        int q = ( p + r ) / 2;
+        mergeSort( arreglo, p, q );
+        mergeSort( arreglo, q + 1, r);
+        merge( arreglo, p, q, r );
+    }
+}
 void ordenamientoMezcla( struct Vector *vector ) {
     //TODO Programar alogritmo cuando lo explique la profa
+    int n, q;
+    q = (vector -> tamaño) / 2;
+
 
 }
 
