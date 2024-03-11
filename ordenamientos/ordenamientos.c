@@ -1,144 +1,72 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void imprimirAlgo( char texto []) {
-    printf("%s, ", texto );    
-}
+void merge(int *arr, int p, int q, int r) {
+    int i, j, k;
+    int n1 = q - p + 1;
+    int n2 = r - q;
 
-//Definiendo tamaño del arreglo
-#define num_lenght 15
+    // Crear arrays temporales
+    int L[n1], R[n2];
 
-void showMenu(int *bandera, float *num ){
+    // Copiar datos a los arrays temporales L[] y R[]
+    for (i = 0; i < n1; i++)
+        L[i] = arr[p + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[q + 1 + j];
 
-    printf("\nSelecciona el metodo de ordenamiento: \n\n 1. - Insercion\n 2.- Burbuja\n 3.- Seleccion \n 4. - Mezcla. \n 0. Salir\n");
-    scanf("%d", bandera );
-
-    if( *bandera ) {
-        printf("\n * Arreglo deordenado:\n");
-        imprimirArreglo( num );
-    }
-
-    switch ( *bandera )
-    {
-    case 1:
-        ordenamientoInsercion( num );
-        break;
-
-    case 2:
-        ordenamientoBurbuja( num );
-        break;
-
-    case 3:
-        ordenamientoSeleccion( num );
-        break;
-
-    case 4:
-        ordenamientoMezcla( num );
-        break;
-    
-    default:
-        return;
-        break;
-    }
-
-    printf("\n * Arreglo ordenado:\n");
-    imprimirArreglo( num );
-
-
-}
-
-void numAleatorios(float *num){
-
-    int i;
-
-    srand(time(NULL));
-
-    for(i=0 ; i<num_lenght ; i++){
-
-        num[i] = rand() % 100;
-
-    }
-
-}
-
-void imprimirArreglo(float *num){
-
-    int i;
-
-    printf("\n");
-
-    for(i=0 ; i<num_lenght ; i++){
-
-        printf("%0.1f / ",*( num + i));
-
-    }
-
-    printf("\n");
-
-}
-
-void ordenamientoInsercion( float *num ){
-
-    int i,j;
-    float aux;
-
-    for(j=1 ; j<num_lenght ; j++){
-
-        aux = num[j];
-        i = j-1;
-
-            while(i>=0 && num[i]>aux){
-
-                num[i+1] = num[i];
-                i = i-1;
-
-            }
-
-        num[i+1] = aux;
-
-    }
-
-}
-void ordenamientoBurbuja( float *num ) {
-    int i, ordenado;
-    float *aux;
-
-    aux = malloc( sizeof( float ) );
-
-    while ( !ordenado ) {
-        for( i = 0; i < num_lenght - 1; i++ ) {
-            if( *(num + i) > *(num + i + 1 ) ) {
-                *aux = *(num + i);
-                *(num + i) = *(num + i + 1) ;
-                *(num + i + 1) = *aux; 
-            }
+    // Combinar los arrays temporales de vuelta en arr[p..r]
+    i = 0;
+    j = 0;
+    k = p;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
         }
-    } 
-    free( aux );
-    
+        k++;
+    }
 
+    // Copia los elementos restantes de L[]
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // Copiar los elementos restantes de R[]
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
 }
-void ordenamientoSeleccion( float *num ) {
 
-}
-void ordenamientoMezcla( float *num ) {
+void mergeSort(int *arr, int p, int r) {
+    if (p < r) {
+        // Encuentra el punto medio del arreglo
+        int q = p + (r - p) / 2;
 
+        // Ordena la primera y segunda mitad del array
+        mergeSort(arr, p, q);
+        mergeSort(arr, q + 1, r);
+
+        // Combina las mitades ordenadas
+        merge(arr, p, q, r);
+    }
 }
 
 int main(){
 
-    float *num;
-    num = (float *) calloc( num_lenght, sizeof(float ) );
+    int arr[10] = {  3, 67, 32, 76, 12, 89, 1, 56, 32, 16 };
+    mergeSort( arr, 0, 9 );
 
-    int bandera;
-
-    do {
-
-        numAleatorios(num);
-        showMenu( &bandera, num );
-
-    } while( bandera != 0 );
-
-    free( num );
+    int i;
+    for( i = 0; i < 10; i++ ) {
+        printf("%d, ", arr[i]);
+    }
 
 }
