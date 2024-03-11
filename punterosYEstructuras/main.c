@@ -22,5 +22,9 @@ void menu() {
 
 void main() {
     menu();
+    struct Persona daniel;
+    struct Domicilio dom;
 
+    daniel.domicilio = &dom;
+    scanf("%d", daniel.domicilio -> lote);
 }
