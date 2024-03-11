@@ -159,11 +159,11 @@ void showMenu(int *bandera)
 
     do {
         // Menu de opciones.
-        printf("--------------------------------------\n");
-        printf("\n| Selecciona el metodo de ordenamiento: |\n|\t\t\t\t\t|\n");
+        printf("*---------------------------------------*\n");
+        printf("| Selecciona el metodo de ordenamiento: |\n|\t\t\t\t\t|\n");
         printf("| 1.- Insercion\t\t\t\t|\n| 2.- Burbuja\t\t\t\t|\n| 3.- Seleccion\t\t\t\t|\n| 4.- Mezcla\t\t\t\t|\n| 0.- Salir\t\t\t\t|\n| Opcion: ");
         scanf("%d", bandera);
-        printf("--------------------------------------\n");
+        printf("*---------------------------------------*\n");
 
         fflush( stdin ); // Limpieza del buffer
 
