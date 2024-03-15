@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 /**
  * Que me dice que me quiere
 Que vivir sin mí no puede
@@ -55,3 +57,23 @@ Que ni se me ocurra estar de nuevo junto a ti
 Estar de nuevo junto a ti
 Mi corazón no aguanta más fracaso
 */
+int busquedaBinaria( int arr[], int v, int i, int j ) {
+    int k = ( i + j ) / 2;
+    // Condicion de corte
+    if( i >= j ) return -i;
+
+    if( arr[k] == v ) return k;
+    else {
+        if( arr[k] < v ) i = k+1;
+        else j = k-1;
+
+        // Invocación recursiva osi osi
+        return busquedaBinaria( arr, v , i, j );
+    } 
+}
+int main() {
+    int arreglo[] = { 2, 4, 5, 8, 12, 18, 23, 45 };
+    int v = 6;
+
+    printf("%d", busquedaBinaria(arreglo, v , 0, 7 ));
+}
