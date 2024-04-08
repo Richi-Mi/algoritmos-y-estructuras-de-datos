@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #define archivo "SALIDA.txt"
-#define abcSize 26
+#define abcSize 27
 
 int arreglo[ 300000 ];
 
@@ -28,7 +28,7 @@ void createIndexedSearch( struct Indice indices[] ) {
     file = fopen( archivo, "r");
 
     char linea[16];
-    char letra = 'A';
+    char letra = ' ';
     int i = 0;
     int k = 0;
 
@@ -53,10 +53,10 @@ void createIndexedSearch( struct Indice indices[] ) {
 	}
     // Añadiendo la Z
     struct Indice indice;
-            indice.i = i;
-            indice.letra = 'Z';
+    indice.i = 300000;
+    indice.letra = 'Z';
 
-            indices[k] = indice;
+    indices[k] = indice;
 
     fclose( file );
 }
@@ -72,7 +72,6 @@ int searchKey( char clave[], struct Indice indices[] ) {
             break;
         }
     }
-    // Y13991
     int inicial = indices[i - 1].i;
     int final = indice.i;
 
@@ -87,7 +86,7 @@ int searchKey( char clave[], struct Indice indices[] ) {
 void main() {
     printf("Creando lista indexada... (buscando indices)\n\n");
     // Creamos la lista indexada.
-    struct Indice indices[27];
+    struct Indice indices[ abcSize ];
     createIndexedSearch( indices );
 
     char clave[6];
@@ -100,6 +99,8 @@ void main() {
         printf("Que clave desea buscar?: ");
         scanf("%s", clave );
 
+        fflush( stdin );
+
         int key = searchKey( clave, indices );
         if( key != -1 ) {
             printf("La clave se encontro en el indice: %d\n", key );
@@ -109,6 +110,8 @@ void main() {
         }
         printf("Desea buscar otra clave? (y = 1/n = 0): ");
         scanf("%d", &descicion );
+
+        fflush( stdin );
 
     } while( descicion == 1 );
 }
