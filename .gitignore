@@ -2,3 +2,4 @@ api_key.txt
 .vscode
 .dist
 */output
+*.exe
