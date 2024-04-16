@@ -13,6 +13,10 @@ struct Indice {
 // Prototipo de la función
 void createIndexedSearch(struct Indice indices[]);
 
+int getNum( char linea[] );
+
+int searchKey( char clave[], struct Indice indices[] );
+
 int getNum( char linea[] ) {
     int i;
     char num[5];
@@ -82,12 +86,25 @@ int searchKey( char clave[], struct Indice indices[] ) {
     }
     return -1;
 }
+void showTable( struct Indice indices[] ) {
+    printf("*-------------------*\n");
+    printf("| letra    | indice |\n");
+    printf("*-------------------*\n\n");
+
+    int i;
+    for( i = 0; i < abcSize; i++ ) {
+        printf("%c -> %d\n", indices[i].letra, indices[i].i );
+    }
+    printf("\n");
+}
 
 void main() {
     printf("Creando lista indexada... (buscando indices)\n\n");
     // Creamos la lista indexada.
     struct Indice indices[ abcSize ];
     createIndexedSearch( indices );
+
+    showTable( indices );
 
     char clave[6];
     int descicion = 1;
