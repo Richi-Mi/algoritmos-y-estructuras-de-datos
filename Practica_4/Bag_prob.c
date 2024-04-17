@@ -14,18 +14,24 @@ typedef struct Objeto obj;
 
 #define MaxWeight 16
 
-void inicializar(obj cosa[], int cant){
+
+void createAndShowAleatoryTable( obj objetos[], int nObjetos ) {
 
     int i;
-
-    for(i=0 ; i<cant ; i++){
-
-        cosa[i].peso = rand()%10;
-        cosa[i].precio = rand()%10;
-
-    }
     
+    printf("*------------------------*\n");
+    printf("| Objeto | Peso  | Valor |\n");
+    printf("*------------------------*\n");
 
+    for( i = 0; i < nObjetos; i++ ) {
+
+        //Incializando valiables
+        objetos[i].precio = rand() % 100;
+        objetos[i].peso  = rand() % 10; 
+
+        printf("| %d      |   %d   |  %d   |\n", i, objetos[i].peso, objetos[i].precio );
+    }
+    printf("*------------------------*\n");
 }
 
 
@@ -43,28 +49,17 @@ void exhaustiveSearch(obj cosa[], int cant ){
 
 }
 
+void createAllCombinations( int nObjetos ) {
+    int sizeConjuntoPotencia = pow(2, nObjetos ), i;
+    // TODO: Create all combinations about this.
+}
+
 void tablaVerdad(obj cosa[], int cant){
 
 
 
 }
 
-void imprimirTabla(obj cosa[],int cant){
-
-    int i;
-
-    printf("*--------------------------*\n");
-    printf("| Objeto   | Peso | Precio |\n");
-    printf("*--------------------------*\n\n");
-
-    for(i=0 ; i<cant ; i++){
-
-        printf("| Objeto %d |  %d   |   %d    |\n", i, cosa[i].peso, cosa[i].precio);
-
-    }
-    printf("\n*--------------------------*\n\n");
-
-}
 
 
 int main(){
@@ -78,11 +73,11 @@ int main(){
 
     srand(time(NULL));
 
-    inicializar(p_thing, cant);
-
-    imprimirTabla(p_thing, cant);
+    createAndShowAleatoryTable(p_thing,cant);
 
     free(p_thing);
     
     return 0;
 }
+
+
