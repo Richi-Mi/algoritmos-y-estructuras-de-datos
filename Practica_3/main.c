@@ -10,8 +10,7 @@ struct Indice {
     char letra;
     int i;
 };
-// Prototipo de la función
-void createIndexedSearch(struct Indice indices[]);
+
 
 int getNum( char linea[] ) {
     int i;
