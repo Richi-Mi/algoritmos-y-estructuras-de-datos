@@ -10,10 +10,10 @@ struct Objeto {
 
 };
 
+
 typedef struct Objeto obj;
 
 #define MaxWeight 16
-
 
 void createAndShowAleatoryTable( obj objetos[], int nObjetos ) {
 
@@ -35,30 +35,48 @@ void createAndShowAleatoryTable( obj objetos[], int nObjetos ) {
 }
 
 
-void exhaustiveSearch(obj cosa[], int cant ){
+void exhaustiveSearch(obj cosa[], int nObjetos ){
+   
+   /*
+
     int i, j;
     int w;
-    for( i = 0; i < cant; i++ ) {
+    for( i = 0; i < nObjetos; i++ ) {
         obj actual = cosa[i];
         int weight = 0;
-        for( j = i; j < cant; j++ ) {
+        for( j = i; j < nObjetos; j++ ) {
             weight += cosa[j].peso;
         }
     }
 
+    */
 
 }
 
-void createAllCombinations( int nObjetos ) {
-    int sizeConjuntoPotencia = pow(2, nObjetos ), i;
-    // TODO: Create all combinations about this.
+
+void tablaVerdad(obj thing[], int nObjetos){
+
+        int w[nObjetos];
+        int i,j;
+        int cond;
+
+        for(i=0 ; i<(pow(2,nObjetos)) ; i++){
+
+            for(j=0 ; j<nObjetos ; j++){
+            
+
+
+                if((i/powf(2,j))){
+                    cond = 1;
+                }
+
+            }
+
+
+        }
+
 }
 
-void tablaVerdad(obj cosa[], int cant){
-
-
-
-}
 
 
 
@@ -66,7 +84,7 @@ int main(){
 
     int cant;
 
-    printf("¿Cuantos objetos desea poner?");
+    printf("Cuantos objetos desea poner?");
     scanf("%d",&cant);
 
     obj *p_thing = (obj*)calloc(cant,sizeof(obj));
