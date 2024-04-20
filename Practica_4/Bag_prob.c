@@ -35,17 +35,17 @@ void createAndShowAleatoryTable( obj objetos[], int nObjetos ) {
 }
 
 
-void exhaustiveSearch(obj cosa[], int nObjetos ){
+void exhaustiveSearch(obj objetos[], int nObjetos ){
    
    /*
 
     int i, j;
     int w;
     for( i = 0; i < nObjetos; i++ ) {
-        obj actual = cosa[i];
+        obj actual = objetos[i];
         int weight = 0;
         for( j = i; j < nObjetos; j++ ) {
-            weight += cosa[j].peso;
+            weight += objetos[j].peso;
         }
     }
 
@@ -63,8 +63,6 @@ void tablaVerdad(obj thing[], int nObjetos){
         for(i=0 ; i<(pow(2,nObjetos)) ; i++){
 
             for(j=0 ; j<nObjetos ; j++){
-            
-
 
                 if((i/powf(2,j))){
                     cond = 1;
