@@ -27,6 +27,9 @@ void printCombinations(Elemento *elementos, int cant, int *solucionActual){
             pesoTotal += elementos[i].peso;
 
         }
+        else{
+            printf("%d ",0);
+        }
     }
     printf("(Valor: %d, Peso: %d)\n", valorTotal, pesoTotal);
 
