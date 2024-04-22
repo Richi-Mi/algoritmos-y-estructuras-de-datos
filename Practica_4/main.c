@@ -31,7 +31,7 @@ void printCombinations(Elemento *elementos, int cant, int *solucionActual){
             printf("%d ",0);
         }
     }
-    printf("(Valor: %d, Peso: %d)\n", valorTotal, pesoTotal);
+    printf("(Peso: %d Kg, Precio: $ %d)\n", pesoTotal, valorTotal );
 
 }
 

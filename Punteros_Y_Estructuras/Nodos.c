@@ -22,8 +22,7 @@ void asingMemory(int **p){
 */
 
 // Apunrador doble
-void agregar(Nodo **p, int x)
-{
+void agregar(Nodo **p, int x){
 
     Nodo *new = (Nodo *)malloc(sizeof(Nodo));
 
