@@ -8,8 +8,9 @@ void main() {
     p = &num; // Dirección a la que apunta.
 
     printf("Valor numerico de la variable: %d \n", num );
-    printf("Direccón en memoria de la variable: %p\n", &num );
-    printf("Direccón en memoria del puntero: %p\n", p );
+    printf("Direccion en memoria de la variable: %p\n", &num );
+    printf("Direccion memoria de la variable(hexadecimal): %x\n", &num );
+    printf("Direccion memoria del puntero: %p\n", p );
     printf("Valor numerico del puntero: %d\n", *p );
 
     // USO de Malloc.
@@ -49,4 +50,5 @@ void main() {
         printf( "%d, ", arr[i] );
     }
     printf("\n");
+    free(arr);
 }
