@@ -39,6 +39,7 @@ int main(){
 
     Persona personas[ sizeArr ];
     int option, result, i;
+    char rfc[12];
 
     for( i = 0; i  < sizeArr; i++ ) {
         Persona emptyPerson;
@@ -69,15 +70,22 @@ int main(){
         case 2:
             // Get RFC.
             printf("Ingrese la RFC a buscar: \n");
-            char rfc[12];
             scanf("%s", rfc );
+
+            fflush( stdin );
             
             Persona foundedPerson = personas[ searchPersonByRFC( personas, rfc ) ];
             printf("Persona encontrada: %s", foundedPerson.nombre );
 
             break;
         case 3:
-            //deletePerson();
+            // Get RFC.
+            printf("Ingrese la RFC del usuario a eliminar: \n");
+            scanf("%s", rfc );
+
+            fflush( stdin );
+
+            deletePerson( personas, rfc );
             break;
         case 4:
             showAllElements( personas );
@@ -156,14 +164,19 @@ void showAllElements( Persona personas[] ){
     int i; 
 
     for( i = 0; i < sizeArr; i++ ) {
-        printf("%d. - %s con RFC: %s\n", i, personas[i].nombre, personas[i].rfc );
+        if( personas[i].nombre[0] == '-') {
+            return;
+        }
+        else {
+            printf("%s con RFC: %s\n", personas[i].nombre, personas[i].rfc ); 
+        }
     }
     printf("La cantidad total de usuarios registrados es: %d", sizeAct );
 }
 Persona deletePerson( Persona personas[], char rfc[] ) {
     Persona emptyPerson;
-    strcpy( emptyPerson.nombre, "null");
-    strcpy( emptyPerson.rfc, "null");
+    strcpy( emptyPerson.nombre, '-');
+    strcpy( emptyPerson.rfc, '-');
 
     int i = searchPersonByRFC( personas, rfc );
     personas[i] = emptyPerson;
