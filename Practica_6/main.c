@@ -1,183 +1,144 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-//// Listas Estaticas 
+#define CAPACIDAD_MAXIMA 10
 
-typedef struct Persona{
+// Definición de la estructura Persona
+struct Persona {
+    char nombre[ 50 ];
+    char rfc[ 13 ]; // RFC tiene una longitud fija de 13 caracteres
+};
 
-    char rfc[12];
-    char nombre[255];
+// Definición de la lista de personas
+struct ListaPersonas {
+    struct Persona personas[ CAPACIDAD_MAXIMA ];
+    int cantidad; // Para llevar un registro de la cantidad de personas en la lista
+};
 
-} Persona;
+// Función para insertar una persona al final de la lista
+void insertarAlFinal( struct ListaPersonas *lista, struct Persona persona ) {
+    if ( lista -> cantidad < CAPACIDAD_MAXIMA ) {
+        lista -> personas[ lista-> cantidad ] = persona;
+        lista -> cantidad++;
 
-// Variables globales estaticas.
-
-#define sizeArr 10
-
-// Variables globales dinamicas.
-
-int sizeAct = 0;
-
-// Definición de funciones.
-
-int insertToEnd( Persona personas[] );
-
-int insertTo( Persona personas[], Persona personToInsert, int position );
-
-int searchPersonByRFC( Persona personas[], char rfc[] );
-
-Persona searchPersonByIndex( Persona personas[], int index );
-
-Persona deletePerson( Persona personas[], char rfc[] );
-
-Persona getDataFromConsole();
-
-void showAllElements( Persona personas[] );
-
-int main(){
-
-    Persona personas[ sizeArr ];
-    int option, result, i;
-    char rfc[12];
-
-    for( i = 0; i  < sizeArr; i++ ) {
-        Persona emptyPerson;
-        strcpy( emptyPerson.nombre, "-");
-        strcpy( emptyPerson.rfc, "-");
-
-        personas[i] = emptyPerson;
+        printf("Persona insertada correctamente.\n");
+    } 
+    else {
+        printf("La lista está llena, no se puede insertar más personas.\n");
     }
-
-    do {
-        printf("\n*---------------------MENU----------------------*\n");
-        printf("| 1. Dar de alta a una persona \t\t\t|\n| 2. Buscar a una persona por RFC \t\t|\n| 3. Borrar a una persona por RFC \t\t|\n| 4. Mostrar todos los elementos de la lista \t|\n| 0. Salir \t\t\t\t\t|");
-        printf("\n*-----------------------------------------------*\n");
-
-        scanf("%d",&option);
-
-        switch (option){
-        case 1:
-            result = insertToEnd( personas );
-
-            if( result == 0 ) {
-                printf("Usuario registrado correctamente \n");
-            }
-            else {
-                printf("Se ha alcanzado el numero maximo de usuarios \n");
-            }
-            break;
-        case 2:
-            // Get RFC.
-            printf("Ingrese la RFC a buscar: \n");
-            scanf("%s", rfc );
-
-            fflush( stdin );
-            
-            Persona foundedPerson = personas[ searchPersonByRFC( personas, rfc ) ];
-            printf("Persona encontrada: %s", foundedPerson.nombre );
-
-            break;
-        case 3:
-            // Get RFC.
-            printf("Ingrese la RFC del usuario a eliminar: \n");
-            scanf("%s", rfc );
-
-            fflush( stdin );
-
-            deletePerson( personas, rfc );
-            break;
-        case 4:
-            showAllElements( personas );
-            break;
-        default:
-            break;
-    }
-    } while( option != 0 );
-
-
 }
 
-Persona getDataFromConsole() {
-    Persona person;
-
-    printf("Ingrese el nombre de la persona: \n");
-    char nombre[255];
-    scanf("%s", nombre);
-
-    strcpy( person.nombre, nombre );
-    fflush( stdin );
-
-    printf("Ingrese el RFC de la persona: \n");
-    char rfc[12];
-    scanf("%s", rfc );
-
-    strcpy( person.rfc, rfc );
-    fflush( stdin );
-
-    return person;
+// Función para insertar una persona en una posición específica de la lista
+void insertarEnPosicion(struct ListaPersonas *lista, struct Persona persona, int posicion) {
+    if ( posicion >= 0 && posicion < CAPACIDAD_MAXIMA && lista->cantidad < CAPACIDAD_MAXIMA ) {
+        // Desplazar las personas hacia adelante para hacer espacio para la nueva persona
+        for ( int i = lista -> cantidad; i > posicion; i-- ) {
+            lista->personas[i] = lista->personas[i - 1];
+        }
+        lista->personas[posicion] = persona;
+        lista->cantidad++;
+        printf("Persona insertada correctamente en la posición %d.\n", posicion);
+    } 
+    else {
+        printf("La posición especificada no es válida o la lista está llena.\n");
+    }
 }
 
-int insertToEnd( Persona personas[] ){
-    Persona personToInsert = getDataFromConsole();
+// Función para buscar una persona por RFC en la lista
+void buscarPersona(struct ListaPersonas lista, char rfc[13]) {
+    int encontrada = 0;
+    for (int i = 0; i < lista.cantidad; i++) {
+        if (strcmp(lista.personas[i].rfc, rfc) == 0) {
+            printf("Persona encontrada:\n");
+            printf("Nombre: %s\n", lista.personas[i].nombre);
+            printf("RFC: %s\n", lista.personas[i].rfc);
+            encontrada = 1;
+            break;
+        }
+    }
+    if (!encontrada) {
+        printf("Persona con RFC %s no encontrada.\n", rfc);
+    }
+}
 
-    if( personToInsert.nombre == NULL || personToInsert.rfc == NULL ) 
-        return -1;
+// Función para borrar una persona por RFC de la lista
+void borrarPersona(struct ListaPersonas *lista, char rfc[13]) {
+    int encontrado = 0;
+    for (int i = 0; i < lista->cantidad; i++) {
+        if (strcmp(lista->personas[i].rfc, rfc) == 0) {
+            for (int j = i; j < lista->cantidad - 1; j++) {
+                lista->personas[j] = lista->personas[j + 1];
+            }
+            lista->cantidad--;
+            printf("Persona con RFC %s borrada correctamente.\n", rfc);
+            encontrado = 1;
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Persona con RFC %s no encontrada para ser borrada.\n", rfc);
+    }
+}
 
-    if( sizeAct >= 10 )
-        return -1;
-    // Agregar persona.
-    personas[sizeAct] = personToInsert;
-    sizeAct++;
+// Función para mostrar todas las personas en la lista
+void mostrarPersonas(struct ListaPersonas lista) {
+    printf("Lista de personas:\n");
+    for (int i = 0; i < lista.cantidad; i++) {
+        printf("%d. Nombre: %s, RFC: %s\n", i + 1, lista.personas[i].nombre, lista.personas[i].rfc);
+    }
+    printf("Total de personas en la lista: %d\n", lista.cantidad);
+}
+
+// Función principal (menú)
+int main() {
+    struct ListaPersonas lista = {{}, 0}; // Inicializar la lista de personas
+
+    while (1) {
+        int opcion;
+        printf("\nMenú:\n");
+        printf("1. Dar de alta a una persona\n");
+        printf("2. Buscar a una persona por RFC\n");
+        printf("3. Borrar a una persona por RFC\n");
+        printf("4. Mostrar todos los elementos de la lista\n");
+        printf("5. Salir\n");
+        printf("Seleccione una opción: ");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1: {
+                struct Persona nueva_persona;
+                printf("Ingrese el nombre de la persona: ");
+                scanf("%s", nueva_persona.nombre);
+                printf("Ingrese el RFC de la persona: ");
+                scanf("%s", nueva_persona.rfc);
+                insertar_al_final(&lista, nueva_persona);
+                break;
+            }
+            case 2: {
+                char rfc[13];
+                printf("Ingrese el RFC de la persona que desea buscar: ");
+                scanf("%s", rfc);
+                buscar_persona(lista, rfc);
+                break;
+            }
+            case 3: {
+                char rfc[13];
+                printf("Ingrese el RFC de la persona que desea borrar: ");
+                scanf("%s", rfc);
+                borrar_persona(&lista, rfc);
+                break;
+            }
+            case 4:
+                mostrar_personas(lista);
+                break;
+            case 5:
+                printf("Saliendo del programa...\n");
+                return 0;
+            default:
+                printf("Opción no válida. Por favor, seleccione una opción del menú.\n");
+        }
+    }
 
     return 0;
-}
-
-int insertTo(Persona personas[], Persona personToInsert, int position ){
-    personas[position] = personToInsert;
-}
-
-int searchPersonByRFC(Persona personas[], char rfc[] ){
-    int i, j; 
-
-    for( i = 0; i < sizeAct; i++ ) {
-        int bandera = 1;
-        
-        for( j = 0; j < 12; j++ ) {
-            if(  personas[i].rfc[j] != rfc[j] ) {
-                bandera = 0;
-            }
-        }
-
-        if( bandera == 1 ) {
-            return i;
-        } 
-    }
-    return -1;
-}
-
-Persona searchPersonByIndex(Persona personas[], int index ) {
-    return personas[index];
-}
-
-void showAllElements( Persona personas[] ){
-    int i; 
-
-    for( i = 0; i < sizeArr; i++ ) {
-        if( personas[i].nombre[0] == '-') {
-            return;
-        }
-        else {
-            printf("%s con RFC: %s\n", personas[i].nombre, personas[i].rfc ); 
-        }
-    }
-    printf("La cantidad total de usuarios registrados es: %d", sizeAct );
-}
-Persona deletePerson( Persona personas[], char rfc[] ) {
-    Persona emptyPerson;
-    strcpy( emptyPerson.nombre, '-');
-    strcpy( emptyPerson.rfc, '-');
-
-    int i = searchPersonByRFC( personas, rfc );
-    personas[i] = emptyPerson;
 }
