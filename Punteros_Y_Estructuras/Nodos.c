@@ -112,7 +112,7 @@ void erease(Nodo **p, int v){
         if(ant != NULL)
             ant->sig = aux->sig;
         else
-            p = aux->sig;
+            *p = aux->sig;
         
         free(aux);
 
@@ -156,13 +156,13 @@ Nodo* insertOrdenado(Nodo **p, int v){
 
 }
 
-/*
+
 
 //Insetar valores no repetidos
-Nodo* insertarElemento(Nodo **p, int v, int* enc){
+Nodo* insertarElementoNoRepetido(Nodo **p, int v, int* enc){
 
     Nodo *r = buscar(*p,v);
-    *enc = r! = NULL;       //Vale 1 si lo encuetra y 0 si no lo encuentra
+    *enc = r != NULL;       //Vale 1 si lo encuetra y 0 si no lo encuentra
 
     if(!*enc){
         r = insertOrdenado(p,v);
@@ -172,13 +172,16 @@ Nodo* insertarElemento(Nodo **p, int v, int* enc){
 
 }
 
-*/
+
 
 //Tests
 int main() {
 
     Nodo *p = NULL;
     Nodo *luca;
+    int enc;
+
+/*
 
     // Funcion agregar valor a la lista
     agregar(&p, 5);
@@ -197,16 +200,57 @@ int main() {
 
     mostrar(p);
 
+*/
+
+    agregar(&p, 1);
+    agregar(&p, 2);
+    agregar(&p, 4);
     agregar(&p, 5);
-    agregar(&p, 8);
-    agregar(&p, 7);
-    agregar(&p, 10);
 
     mostrar(p);
-/*
-    luca = buscar(p,7);
-    printf("Valor encontrado: %d\n",luca->valor);
-*/
+
+    //Busca el valor dado '3' en la lista dada 'p'
+    //Si lo encuentra devuelve la direccion del Nodo en la posicón donde esté el número buscado
+    //De lo contrario devuelve NULL
+    luca = buscar(p,6);
+    
+    if(luca != NULL)
+        printf("\nValor encontrado: %d\n",luca->valor);
+    else    
+        printf("\nValor no escontrado\n");
+
+    agregar(&p, 6);
+
+    luca = buscar(p,6);
+    
+    if(luca != NULL)
+        printf("\nValor encontrado: %d\n",luca->valor);
+    else    
+        printf("\nValor no escontrado\n");
+
+    mostrar(p);
+
+    erease(&p,6);
+
+    mostrar(p);
+
+    luca = insertOrdenado(&p,3);
+
+    if(luca != NULL)
+        printf("\nValor encontrado: %d\n",luca->valor);
+    else    
+        printf("\nValor no escontrado\n");    
+
+    mostrar(p);
+
+    luca = insertarElementoNoRepetido(&p,6,&enc);
+
+    if(luca != NULL)
+        printf("\nValor encontrado: %d\n",luca->valor);
+    else    
+        printf("\nValor no escontrado\n");    
+
+    mostrar(p);
 
     free(p);
 }
