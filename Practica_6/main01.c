@@ -25,8 +25,7 @@ void agregar(Nodo **p, float x){
         Nodo *aux = *p;
 
         // Pregunta sobre el nodo siguiente al que esta apunta
-        while (aux->sig != NULL)
-        {
+        while (aux->sig != NULL){
             // aux apunta al siguiente NODO
             aux = aux->sig;
         }
@@ -37,17 +36,13 @@ void agregar(Nodo **p, float x){
 
 void mostrar(Nodo *p){
 
-    // aux -> Accede al valor al que apunta 'p' (dirección de estructura)
     Nodo *aux = p;
     int i = 0;
 
-    // Pregunta sobre el nodo al que apunta
-    while (aux != NULL)
-    {
+    while (aux != NULL){
 
-        printf("%d | %d\n", i, aux->valor);
+        printf("%d | %0.1f\n", i, aux->valor);
         i++;
-        // aux apunta al siguiente NODO
         aux = aux->sig;
     }
 
@@ -160,11 +155,34 @@ void mediana(Nodo *p, int cant, float *mediana){
 
 }
 
-int moda(){
+void moda(Nodo *p, float *modaa){
+
+    Nodo *actual = p;
+    int maximoFrecuencia = 0;
+    *(modaa) = p->valor;
+
+    while (actual != NULL) {
+        int frecuenciaActual = 1;
+        Nodo *temp = actual->sig;
+        while (temp != NULL) {
+            if (temp->valor == actual->valor){
+                frecuenciaActual++;
+            }
+
+            temp = temp->sig;
+        }
+        if (frecuenciaActual > maximoFrecuencia) {
+            maximoFrecuencia = frecuenciaActual;
+            *(modaa) = actual->valor;
+        }
+        actual = actual->sig;
+    }
 
 }
 
 void varinza(Nodo *p, float cant, float med, float *varz){
+
+    *(varz) = 0;
 
     while(p != NULL){
         *(varz) += pow((p->valor-med),2);
@@ -175,10 +193,12 @@ void varinza(Nodo *p, float cant, float med, float *varz){
 
 }
 
-void desviaciónEstandar(Nodo *p, float cant, float med, float *devStand){
+void desvStandar(Nodo *p, float cant, float med, float *devStand){
+
+    *(devStand) = 0;
 
     while(p != NULL){
-        *(devStand) += pow((p->valor-med),2);
+        *(devStand) += pow(((p->valor)-med),2);
         p = p->sig;
     }
 
@@ -190,19 +210,21 @@ int main(){
     
     Nodo *p = NULL;
     Nodo *new = NULL;
-    int x;
-    float cant, med, median, varz, devEstandar;
+    float x;
+    float cant, med, median, mod, varz, devEstandar;
 
     printf("Escriba numeros para hacer operaciones (Al escribir 0 se detiene)\n");
 
     while(1){
 
-        scanf("%d",&x);
+        scanf("%f",&x);
 
         if(!x)
             break;
-
-        agregar(&p,x);
+        else{
+            agregar(&p,x);
+        
+        }
 
     }
 
@@ -217,12 +239,14 @@ int main(){
     totalValores(new,&cant);
     media(new,cant,&med);
     mediana(new,cant,&median);
+    moda(p,&mod);
     varinza(p,cant,med,&varz);
-    desviaciónEstandar(p,cant,med,&devEstandar);
+    desvStandar(p,cant,med,&devEstandar);
 
-    printf("\nTotal de valores: %d",cant);
-    printf("\nMedia: %0.1f",med);
+    printf("\nTotal de valores: %0.0f",cant);
+    printf("\nMedia: %0.2f",med);
     printf("\nMediana: %0.2f",median);
+    printf("\nModa: %0.2f",mod);
     printf("\nVarianza: %0.2f",varz);
     printf("\nDesviacion estandar: %0.2f",devEstandar);
 
