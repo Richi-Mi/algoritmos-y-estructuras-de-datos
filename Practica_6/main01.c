@@ -185,7 +185,7 @@ void varinza(Nodo *p, float cant, float med, float *varz){
     *(varz) = 0;
 
     while(p != NULL){
-        *(varz) += pow((p->valor-med),2);
+        *(varz) += pow(((p->valor)-med),2);
         p = p->sig;
     }
 
