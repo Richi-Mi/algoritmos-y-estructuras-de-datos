@@ -29,6 +29,20 @@ int main() {
             matrixC[j][i] = matrixA[i][j] * matrixB[j][i];
         }
     }
+    printf("\nMatriz A: \n");
+    for( i = 0; i < MAX_ROW; i++ ) {
+        for( j = 0; j < MAX_COLUMN; j++ ) {
+            printf("%d ", matrixA[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\nMatriz B: \n");
+    for( i = 0; i < MAX_ROW; i++ ) {
+        for( j = 0; j < MAX_COLUMN; j++ ) {
+            printf("%d ", matrixB[i][j]);
+        }
+        printf("\n");
+    }
     printf("\nMatriz C: \n");
     for( i = 0; i < MAX_ROW; i++ ) {
         for( j = 0; j < MAX_COLUMN; j++ ) {
