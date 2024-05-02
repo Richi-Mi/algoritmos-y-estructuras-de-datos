@@ -11,6 +11,7 @@ int main() {
 
 
     // Programa 1.
+    printf("\n Programa 1");
     int matrixA[MAX_ROW][MAX_COLUMN], matrixB[MAX_ROW][MAX_COLUMN], matrixC[MAX_ROW][MAX_COLUMN];
     int matriz[MAX_COLUMN][MAX_ROW], i, j, bandera = 0, k = 0;
 
@@ -50,6 +51,7 @@ int main() {
         }
         printf("\n");
     }
+    printf("\n Programa 2");
     printf("\n");
 
     // mostrar la matriz de datos.
@@ -59,7 +61,9 @@ int main() {
         }
         printf("\n");
     }
+    printf("\n Programa 3");
     printf("\n");
+    
     printf("Recorrido en ZicZag: \n");
     // Recorrido en zigzag.
     for( j = 0; j < MAX_COLUMN; j++ ) {
