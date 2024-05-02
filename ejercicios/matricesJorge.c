@@ -9,14 +9,34 @@ int main() {
 
     srand( time( NULL ));
 
+
+    // Programa 1.
+    int matrixA[MAX_ROW][MAX_COLUMN], matrixB[MAX_ROW][MAX_COLUMN], matrixC[MAX_ROW][MAX_COLUMN];
     int matriz[MAX_COLUMN][MAX_ROW], i, j, bandera = 0, k = 0;
 
     // llenar la matriz de datos.
     for( i = 0; i < MAX_ROW; i++ ) {
         for( j = 0; j < MAX_COLUMN; j++ ) {
             matriz[i][j] = rand() % 100;
+
+            matrixA[i][j] = rand() % 100;
+            matrixB[i][j] = rand() % 100;
         }
     }
+    // NOTA: La multiplicacion de matrices solo se da entre matrices n x n, o matrices m x n y n x p c = m x p
+    for( i = 0; i < MAX_ROW; i++ ) {
+        for( j = 0; j < MAX_COLUMN; j++ ) {
+            matrixC[j][i] = matrixA[i][j] * matrixB[j][i];
+        }
+    }
+    printf("\nMatriz C: \n");
+    for( i = 0; i < MAX_ROW; i++ ) {
+        for( j = 0; j < MAX_COLUMN; j++ ) {
+            printf("%d ", matrixC[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
 
     // mostrar la matriz de datos.
     for( i = 0; i < MAX_ROW; i++ ) {
@@ -25,6 +45,7 @@ int main() {
         }
         printf("\n");
     }
+    printf("\n");
     printf("Recorrido en ZicZag: \n");
     // Recorrido en zigzag.
     for( j = 0; j < MAX_COLUMN; j++ ) {
