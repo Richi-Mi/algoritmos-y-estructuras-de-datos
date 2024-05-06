@@ -60,8 +60,6 @@ int main(){
     int num, top;
     Pila *stack = NULL;
     
-    
-
-    printf("Pila tope :%d\n");
+    printf("Buenas que hace.\n");
 
 }
