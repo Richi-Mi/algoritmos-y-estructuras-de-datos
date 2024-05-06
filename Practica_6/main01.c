@@ -123,6 +123,7 @@ void mediana(Nodo *p, int cant, float *mediana){
     int i=0;
 
     while(p != NULL){
+        
         i++;
         p = p->sig;
 
