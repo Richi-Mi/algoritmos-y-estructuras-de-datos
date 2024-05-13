@@ -1,74 +1,145 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-#define MAX 260
+#define MAX 100
 
 typedef struct Pila {
+
     int tope;
+    char values[ MAX ];    
 
-    char operatorValue;
-
-    struct Pila *siguiente;
 } Pila;
 
-// Funciones de la Pila.
-int empty( Pila *myPila ) {
+typedef struct Lista {
+    int type;
+
+    int valueI;
+    char valueC;
+} Lista;
+
+int vacia( Pila *myPila ) {
     return myPila -> tope == 0;
 }
-void destroy( Pila *myPila ) {
-    if( !empty( myPila ) ) {
 
-        free( myPila );
-
-        myPila = malloc( sizeof( Pila ) );
+// Vaciamos Pila.
+void anula( Pila *myPila ) {
+    if( !vacia( myPila ) ) {
         myPila -> tope = 0;
-        myPila -> operatorValue = ' ';
-
-        myPila -> siguiente = NULL;
-    }
-}
-Pila* tope( Pila *myPila ) {
-    int i;
-    for( i = 0; i < myPila -> tope; i++ ) {
-        myPila = myPila -> siguiente;
-    }
-    return myPila;
-}
-void pop( Pila *myPila ) {
-    int i;
-    if( !empty( myPila ) ) {
-        myPila -> tope--;
-        for( i = 0; i < myPila -> tope; i++ ) {
-            myPila = myPila -> siguiente;
+        for( int i = 0; i < MAX; i++ ) {
+            myPila -> values[i] = 0;
         }
-        myPila -> siguiente = NULL;
+    }
+}
+
+char tope( Pila *myPila ) {
+    return myPila -> values[ myPila -> tope ];
+}
+int pop( Pila *myPila ) {
+    if( !vacia( myPila ) ) {
+        myPila -> values[ myPila -> tope ] = 0;
+        myPila -> tope--;
+
+        return 1;
+    }
+    else {
+        return 0;
     }
 }
 void push( Pila *myPila, char element ) {
-    int i;
-    
-    Pila next;
-    next.operatorValue = element;
-    next.siguiente = NULL;
-
-    
+    if( myPila -> tope < MAX ) { 
+        myPila -> values[ myPila -> tope ] = element;
+        myPila -> tope++;
+    }
 }
+int ordenPrecedencia( char caracter ) {
+    switch ( caracter ) {
+    case '+':
+    case '-':
+        return 1;
+    case '*':
+    case '/':
+        return 2;
+    case '^':
+        return 3;
+    default:
+        return 0;
+    }
+}
+
 
 void main( void ) {
     char caracter, expressionInfija[255];
-    int i = 0;
-    Pila *pila;
+    char *numberC = calloc( 20, sizeof( char ) );
 
-    pila = malloc( sizeof( Pila ) );
-    pila -> tope = 0;
-    pila -> operatorValue = ' ';
+    int sizeExpression = 0, i, ep = 0, nc = 0;
     
-    printf("Ingrese una expresión: \n");
+    printf("Ingrese una expresión matematica en infijo: \n");
 
+    // Leer la expresión infija
     while ( ( caracter = getchar() ) != '\n' ) {
-        expressionInfija[i++] = caracter;
+        expressionInfija[ sizeExpression ] = caracter;
+        sizeExpression++;
     }
-    expressionInfija[i] = '\0';
+    expressionInfija[ sizeExpression ] = '\0';
 
-    printf("%s", expressionInfija );
+    Lista *expressionPosfija = calloc( sizeExpression, sizeof( Lista )); 
+    Pila *operadores = malloc( sizeof( Pila ) );
+
+    for( i = 0; i < sizeExpression; i++ ) {
+        // Agregamos los numeros escritos a una cadena.
+        if( isdigit( expressionInfija[i] ) ) {
+            numberC[ nc ] = expressionInfija[i];
+            nc++;
+        }
+        else {
+            expressionPosfija[ ep ].type = 1;
+            expressionPosfija[ ep ].valueI = atoi( numberC );
+
+            ep++;
+
+            nc = 0; 
+
+            free( numberC );  
+            numberC = calloc( 20, sizeof( char ) );
+            
+            // Orden de precedencia. 
+            if( vacia( operadores ) || ordenPrecedencia( tope( operadores ) ) < ordenPrecedencia( expressionInfija[i] ) ) {
+                push( operadores, expressionInfija[i] );
+            }
+            else {
+                char aux = tope( operadores );
+                pop( operadores );
+
+                push( operadores, expressionInfija[i] );
+                expressionInfija[ep] = aux;
+
+                expressionPosfija[ ep ].type = 2;
+                expressionPosfija[ ep ].valueI = aux;
+
+                ep++;
+            }
+        }
+    }
+    
+    expressionPosfija[ep].type = 1;
+    expressionPosfija[ep].valueI = atoi(numberC);
+
+    ep++;
+
+    while ( pop( operadores ) ) {
+        expressionPosfija[ ep ].type = 2;
+        expressionPosfija[ ep ].valueC = tope( operadores );
+        ep++;
+    }
+    free( operadores );
+    for( i = 0; i < ep; i++ ) {
+        if( expressionPosfija[i].type == 1 ) {
+            printf("%d ", expressionPosfija[i].valueI );
+        }
+        else {
+            printf("%c ", expressionPosfija[i].valueC );
+        }
+    }
+    free( expressionPosfija );
 }
