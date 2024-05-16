@@ -41,6 +41,8 @@ void pop( Pila *myPila ) {
 
 }
 
+
+
 //Agregar valores
 void push( Pila *myPila, int element ) {
     
