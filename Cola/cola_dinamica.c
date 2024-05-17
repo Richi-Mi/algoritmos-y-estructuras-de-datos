@@ -14,7 +14,7 @@ void enqueue(Cola **p, int x){
     Cola *nuevo = (Cola*)malloc(sizeof(Cola));
     nuevo->valor = x;
 
-    if(*p = NULL)
+    if(*p == NULL)
         nuevo->sig = nuevo;
     else{
         nuevo->sig = (*p)->sig;
@@ -53,10 +53,28 @@ int main(){
 
     Cola *p = NULL;
 
+    //encolamos vario elementos
+    enqueue(&p,1);
+    enqueue(&p,2);
+    enqueue(&p,3);
+
+    //desencolamos un elemento (sale el 1)
+    printf("%d\n",deenqueue(&p));
+
+    //desencolamos un elemento (sale el 2)
+    printf("%d\n",deenqueue(&p));
+
+    //encolamos más elementos
+    enqueue(&p,4);
     enqueue(&p,5);
+    enqueue(&p,6);
 
+    //desencolamos un elemento (sale el 3)
+    printf("%d\n",deenqueue(&p));
 
-
+    //desencolamos mientras queden elementos en la cola
+    while(p != NULL)
+        printf("%d\n",deenqueue(&p));
 
 
 }
