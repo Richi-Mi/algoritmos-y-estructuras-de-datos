@@ -1,45 +1,46 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct Cola{
-    
+typedef struct Cola {    
+
     int valor;
-    struct Cola *sig;
+    struct Cola *siguiente;
 
+} Cola;
 
-}Cola;
-
-void enqueue(Cola **p, int x){
+void enqueue(Cola **myNode, int x){
 
     Cola *nuevo = (Cola*)malloc(sizeof(Cola));
     nuevo->valor = x;
 
-    if(*p == NULL)
-        nuevo->sig = nuevo;
-    else{
-        nuevo->sig = (*p)->sig;
-        (*p)->sig = nuevo;
+    if( *myNode == NULL ) {
+        nuevo -> siguiente = nuevo;
+        myNode = nuevo;
     }
+    else {
+        Cola *aux = *myNode;
+        while( aux -> siguiente != myNode ) {
+            aux = aux -> siguiente;
+        }
+        nuevo -> siguiente = aux -> siguiente;
+        aux -> siguiente = nuevo;
 
-    *p = nuevo;
-
-
+    }
 }
-
 int deenqueue(Cola **p){
 
-    int v = (*p)->sig->valor;
+    int v = (*p)->siguiente->valor;
 
-    if((*p)->sig == *p){
+    if((*p)->siguiente == *p){
         free(*p);
         (*p) = NULL;
     }
 
     else{
 
-        Cola *aux = (*p)->sig;
+        Cola *aux = (*p)->siguiente;
 
-        (*p)->sig = aux->sig;
+        (*p)->siguiente = aux->siguiente;
         free(aux);
 
     }
@@ -48,9 +49,8 @@ int deenqueue(Cola **p){
 
 }
 
-
-int main(){
-
+int main() {
+    printf("Colas: Implementación Dinamica\n");
     Cola *p = NULL;
 
     //encolamos vario elementos
@@ -75,6 +75,5 @@ int main(){
     //desencolamos mientras queden elementos en la cola
     while(p != NULL)
         printf("%d\n",deenqueue(&p));
-
 
 }
