@@ -8,6 +8,10 @@ typedef struct Pila {
     int tope;
     char values[MAX];
 } Pila;
+typedef struct PilaNumeros {
+    int tope;
+    char values[MAX];
+} PilaNumeros;
 
 typedef struct Lista {
     int type;
@@ -50,6 +54,41 @@ void push(Pila *myPila, char element) {
         myPila->tope++;
     }
 }
+int vaciaNumeros(PilaNumeros *myPila) {
+    return myPila->tope == 0;
+}
+
+void anulaNumeros(PilaNumeros *myPila) {
+    if (!vaciaNumeros(myPila)) {
+        myPila->tope = 0;
+        for (int i = 0; i < MAX; i++) {
+            myPila->values[i] = 0;
+        }
+    }
+}
+
+int topeNumeros(PilaNumeros *myPila) {
+    if (!vaciaNumeros(myPila)) {
+        return myPila->values[myPila->tope - 1];
+    }
+    return 0; // Devuelve un carácter nulo si la pila está vacía
+}
+
+int popNumeros(PilaNumeros *myPila) {
+    if (!vaciaNumeros(myPila)) {
+        myPila->tope--;
+        return myPila->values[myPila->tope];
+    } else {
+        return 0; // Devuelve un carácter nulo si la pila está vacía
+    }
+}
+
+void pushNumeros(PilaNumeros *myPila, int element) {
+    if (myPila->tope < MAX) {
+        myPila->values[myPila->tope] = element;
+        myPila->tope++;
+    }
+}
 
 int ordenPrecedencia(char caracter) {
     switch (caracter) {
@@ -70,16 +109,24 @@ int main(void) {
     char caracter, expressionInfija[MAX];
     char *numberC = calloc(20, sizeof(char));
 
-    int sizeExpression = 0, i, ep = 0, nc = 0;
+    int sizeExpression = 0, i, ep = 0, nc = 0, j, pa = 0, pc = 0; 
 
     printf("Ingrese una expresión matematica en infijo: \n");
 
     // Leer la expresión infija
     while ((caracter = getchar()) != '\n') {
         expressionInfija[sizeExpression] = caracter;
+
+        if( caracter == '(') pa++;
+        if( caracter == ')') pc++;
+
         sizeExpression++;
     }
     expressionInfija[sizeExpression] = '\0';
+    if( pa != pc ) {
+        printf("Error en la expresion");
+        exit(0);
+    }
 
     Lista *expressionPosfija = calloc(sizeExpression, sizeof(Lista));
     Pila *operadores = malloc(sizeof(Pila));
@@ -93,6 +140,9 @@ int main(void) {
             if (nc > 0) {
                 expressionPosfija[ep].type = 1;
                 expressionPosfija[ep].valueI = atoi(numberC);
+                for( j = 0; j < nc; j++) {
+                    numberC[j] = ' ';
+                }
                 ep++;
                 nc = 0;
             }
@@ -138,9 +188,6 @@ int main(void) {
         ep++;
     }
 
-    free(operadores);
-    free(numberC);
-
     for (i = 0; i < ep; i++) {
         if (expressionPosfija[i].type == 1) {
             printf("%d ", expressionPosfija[i].valueI);
@@ -148,6 +195,41 @@ int main(void) {
             printf("%c ", expressionPosfija[i].valueC);
         }
     }
+
+    PilaNumeros *numeros = malloc( sizeof( Pila ) );
+    for (i = 0; i < ep; i++) {
+        if (expressionPosfija[i].type == 1) {
+            pushNumeros( numeros, expressionPosfija[i].valueI );
+        } else {
+            int n2 = popNumeros( numeros );
+            int n1 = popNumeros( numeros );
+            int r;
+
+            switch( expressionPosfija[i].valueC ) {
+                case '+':
+                    r = n1 + n2;
+                    break;
+                case '-':
+                    r = n1 - n2;
+                    break;
+                case '*':
+                    r = n1 * n2;
+                    break;
+                case '/':
+                    r = n1 / n2;
+                    break;
+            }
+
+            pushNumeros( numeros, r );
+        }
+    }
+    int res = popNumeros( numeros );
+    printf("\n - Resultado: %d", res );
+    
     free(expressionPosfija);
+    free(operadores);
+    free(numberC);
+    free(numeros);
+
     return 0;
 }
