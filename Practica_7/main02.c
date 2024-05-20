@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define MAX 50
+#define MAX 1000
 
 typedef struct Pila {
     int tope;
@@ -223,7 +223,7 @@ int main(void) {
             pushNumeros( numeros, r );
         }
     }
-    int res = popNumeros( numeros );
+    int res = topeNumeros( numeros );
     printf("\n - Resultado: %d", res );
     
     free(expressionPosfija);
