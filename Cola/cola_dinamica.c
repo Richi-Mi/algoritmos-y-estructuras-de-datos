@@ -15,11 +15,11 @@ void enqueue(Cola **myNode, int x){
 
     if( *myNode == NULL ) {
         nuevo -> siguiente = nuevo;
-        myNode = nuevo;
+        *myNode = nuevo;
     }
     else {
         Cola *aux = *myNode;
-        while( aux -> siguiente != myNode ) {
+        while( aux -> siguiente != *myNode ) {
             aux = aux -> siguiente;
         }
         nuevo -> siguiente = aux -> siguiente;
@@ -50,6 +50,7 @@ int deenqueue(Cola **p){
 }
 
 int main() {
+    
     printf("Colas: Implementación Dinamica\n");
     Cola *p = NULL;
 
