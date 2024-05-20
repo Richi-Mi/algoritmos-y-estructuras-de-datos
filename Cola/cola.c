@@ -66,6 +66,8 @@ int dequeue(Cola cola){
 
 int main(){
 
-    printf("Hola");
+    Cola *p = NULL;
+
+    enqueue(*p,1);
 
 }
