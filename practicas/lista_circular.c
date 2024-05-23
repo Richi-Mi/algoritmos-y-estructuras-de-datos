@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-
 // Implementación de listas dinamicas circulares
 
 typedef struct Nodo { 

@@ -52,7 +52,7 @@ void deleteElementByIndex( Nodo **node, int index ) {
     free( aux );
 }
 void deleteElementByValue() {
-    
+
 }
 
 void main( void  ) {
@@ -69,7 +69,7 @@ void main( void  ) {
     printf("\n");
     deleteElementByIndex( &node, 0 );
 
-
+    printf("SEXO?\n");
     showElements( node );
 
 }
