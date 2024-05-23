@@ -5,7 +5,7 @@
 //puntero en cabeza y cola
 //Guardar n-1 elementos
 
-#define lenghtQ 6
+#define lenghtQ 12
 
 typedef struct Cola{
 
@@ -50,7 +50,9 @@ int dequeue(Cola cola){
 
     int v;
 
-    if(empty(cola.head,cola.tail))
+    if(!empty(cola.head,cola.tail)){
+
+        if(empty(cola.head,cola.tail))
         return 0;
 
     v = cola.head;
@@ -59,6 +61,10 @@ int dequeue(Cola cola){
         cola.head = 1;
     else
         cola.head++;
+    }
+
+    else
+        v = NULL;
 
     return v;   //El return es solo para saber el valor eliminado, por lo que podemos quitar el return si no nos interesa
 
@@ -66,8 +72,12 @@ int dequeue(Cola cola){
 
 int main(){
 
-    Cola *p = NULL;
+    Cola *p;
 
     enqueue(*p,1);
+    enqueue(*p,2);
+    enqueue(*p,3);
+
+    printf("\tValor fuera cola: %d\n",dequeue(*p));
 
 }
