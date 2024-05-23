@@ -50,9 +50,7 @@ int dequeue(Cola cola){
 
     int v;
 
-    if(!empty(cola.head,cola.tail)){
-
-        if(empty(cola.head,cola.tail))
+    if(empty(cola.head,cola.tail))
         return 0;
 
     v = cola.head;
@@ -61,10 +59,6 @@ int dequeue(Cola cola){
         cola.head = 1;
     else
         cola.head++;
-    }
-
-    else
-        v = NULL;
 
     return v;   //El return es solo para saber el valor eliminado, por lo que podemos quitar el return si no nos interesa
 
