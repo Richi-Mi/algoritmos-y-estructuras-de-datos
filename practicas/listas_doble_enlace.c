@@ -48,6 +48,36 @@ void addElementToStart( Nodo **inicio, Nodo **final, int value ) {
         *inicio = nuevo;
     }
 }
+void eliminarNodo( Nodo **inicio, Nodo **final, int valor ) {
+    // Creamos el nodo a eliminar
+    Nodo *aux = *inicio;
+    Nodo *anterior = NULL;
+    Nodo *siguiente = NULL;
+
+    while( aux != NULL && aux -> value != valor ) {
+        aux = aux -> siguiente;
+    }
+    if( aux != NULL ) {
+        anterior = aux -> anterior;
+        siguiente = aux -> siguiente;
+
+        // Significa que es el primer elemento a eliminar.
+        if( anterior == NULL ) {
+            inicio = aux -> siguiente;
+            siguiente -> anterior = aux -> anterior;
+        }
+        // Significa que es el ultimo elemento a eliminar.
+        if( siguiente == NULL ) {
+            inicio = aux -> anterior;
+            anterior -> siguiente = aux -> siguiente;
+        }
+        if( anterior != NULL && siguiente != NULL ) {
+            anterior -> siguiente = aux -> siguiente;
+            siguiente -> anterior = aux -> anterior;
+        }
+        free( aux );
+    }
+}
 
 int deleteNodo(Nodo **inicio, Nodo **final, int x){
 
