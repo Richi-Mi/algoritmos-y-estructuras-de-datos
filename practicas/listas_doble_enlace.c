@@ -48,12 +48,7 @@ void addElementToStart( Nodo **inicio, Nodo **final, int value ) {
         *inicio = nuevo;
     }
 }
-
-/**
- *@param PAIIIIIIIIIIIIIIIIIIIIIIII
- * 
-*/
-void eliminarNodo( Nodo **inicio, Nodo **final, int valor ) {
+void deleteNodeByValue( Nodo **inicio, Nodo **final, int valor ) {
     // Creamos el nodo a eliminar
     Nodo *aux = *inicio;
     Nodo *anterior = NULL;
@@ -81,6 +76,31 @@ void eliminarNodo( Nodo **inicio, Nodo **final, int valor ) {
             siguiente -> anterior = aux -> anterior;
         }
         free( aux );
+    }
+}
+void insertOrderedNode( Nodo **inicio, Nodo **final, int valueToInsert ) {
+    // Creación del nodo a agregar.
+    Nodo *nuevo = malloc( sizeof( Nodo ) );
+    nuevo -> value = valueToInsert;
+    nuevo -> anterior = NULL;
+    nuevo -> siguiente = NULL;
+
+    Nodo *aux = *inicio;
+    
+    while( aux -> value < valueToInsert && aux != NULL ) {
+        aux = aux -> siguiente;
+    }   
+    if( aux != NULL ) {
+        if( aux -> anterior == NULL ) {
+
+        }
+        if( aux -> siguiente == NULL ) {
+
+        }
+        if( aux -> anterior != NULL && aux -> siguiente != NULL ) {
+
+        }
+        
     }
 }
 

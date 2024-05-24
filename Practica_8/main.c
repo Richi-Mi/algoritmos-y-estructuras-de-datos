@@ -9,7 +9,7 @@ typedef struct Nodo {
     struct Nodo *siguiente;
 } Nodo;
 
-typedef struct Pila {
+typedef struct Stack {
     struct Nodo *inicio;
     int tope;
 } Pila;
