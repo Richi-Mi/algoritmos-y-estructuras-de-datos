@@ -114,6 +114,6 @@ void main() {
         aux = 0;
         push( resultado, num );
     }
-
+    printf("Resultado: \n");
     showElements( resultado );
 }
