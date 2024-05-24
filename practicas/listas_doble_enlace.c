@@ -48,6 +48,11 @@ void addElementToStart( Nodo **inicio, Nodo **final, int value ) {
         *inicio = nuevo;
     }
 }
+
+/**
+ *@param PAIIIIIIIIIIIIIIIIIIIIIIII
+ * 
+*/
 void eliminarNodo( Nodo **inicio, Nodo **final, int valor ) {
     // Creamos el nodo a eliminar
     Nodo *aux = *inicio;
@@ -63,12 +68,12 @@ void eliminarNodo( Nodo **inicio, Nodo **final, int valor ) {
 
         // Significa que es el primer elemento a eliminar.
         if( anterior == NULL ) {
-            inicio = aux -> siguiente;
+            (*inicio) = aux -> siguiente;
             siguiente -> anterior = aux -> anterior;
         }
         // Significa que es el ultimo elemento a eliminar.
         if( siguiente == NULL ) {
-            inicio = aux -> anterior;
+            (*inicio) = aux -> anterior;
             anterior -> siguiente = aux -> siguiente;
         }
         if( anterior != NULL && siguiente != NULL ) {
@@ -95,7 +100,6 @@ int deleteNodo(Nodo **inicio, Nodo **final, int x){
             anterior = aux->anterior;
             siguiente = aux->siguiente;
 
-        }
 
         //Desenlazar primer elemento
         if(anterior == NULL){
@@ -123,12 +127,45 @@ int deleteNodo(Nodo **inicio, Nodo **final, int x){
 
         free(aux);
 
+        }
+        else{
+            return 0;
+        }
+
     return x;
 
 }
 
+void showNodo(Nodo *p){
+
+    while( p != NULL){
+
+        printf("%d ",p->value);
+        p = p->anterior;
+
+    }
+
+}
 
 
 void main( void ) {
+
+    Nodo *p,*q;
+    p = NULL;
+    q = NULL;
+
+    addElementToStart(&p,&q,1);
+    
+    addElementToStart(&p,&q,2);
+    addElementToStart(&p,&q,3);
+    addElementToStart(&p,&q,4);
+    addElementToStart(&p,&q,5);
+    addElementToStart(&p,&q,6);
+
+    showNodo(q);
+
+    eliminarNodo(&p,&q,5);
+
+    showNodo(q);
 
 }
