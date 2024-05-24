@@ -49,6 +49,56 @@ void addElementToStart( Nodo **inicio, Nodo **final, int value ) {
     }
 }
 
+int deleteNodo(Nodo **inicio, Nodo **final, int x){
+
+    Nodo *aux = *inicio;
+    Nodo *anterior, *siguiente;
+    anterior = siguiente = NULL;
+
+    //Recorer los nodos hasta encontrar el fin "NULL" o el valor a eliminar
+    while(aux != NULL && aux->value != x)
+        aux = aux->siguiente;
+        
+        //Inicializar "anterior y suiguiente" tras recorer los nodos
+        if(aux != NULL){
+
+            anterior = aux->anterior;
+            siguiente = aux->siguiente;
+
+        }
+
+        //Desenlazar primer elemento
+        if(anterior == NULL){
+
+            (*inicio) = aux->siguiente;
+            siguiente->anterior = aux->anterior;
+
+        }
+
+        //Desenlazar último elemento
+        if(siguiente == NULL){
+
+            (*final) = aux->anterior;
+            anterior->siguiente = aux->siguiente;
+
+        }
+
+        //Desenlazar elementos del medio
+        if(anterior != NULL && siguiente != NULL){
+
+            anterior->siguiente = aux->siguiente;
+            siguiente->anterior = aux->anterior;
+
+        }
+
+        free(aux);
+
+    return x;
+
+}
+
+
+
 void main( void ) {
 
 }
