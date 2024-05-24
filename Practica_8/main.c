@@ -1,66 +1,86 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-//hola
-typedef struct Queue {
+
+// Practica 8. Suma de enteros muy largos
+// Implementación de pilas dinamicas
+typedef struct Nodo { 
     int value;
+    struct Nodo *siguiente;
+} Nodo;
 
-    struct Queue *siguiente;
-} Queue;
+typedef struct Pila {
+    struct Nodo *inicio;
+    int tope;
+} Pila;
 
-void enQueue(Queue **myQueue, int element){
-    Queue *nuevo = (Queue*) malloc(sizeof(Queue));
-    nuevo -> value = element;
-
-    if( *myQueue == NULL ) {
-        nuevo -> siguiente = nuevo;
-        *myQueue = nuevo;
-    }
-    else {
-        Queue *aux = *myQueue;
-        while( aux -> siguiente != *myQueue ) {
-            aux = aux -> siguiente;
-        }
-        nuevo -> siguiente = aux -> siguiente;
-        aux -> siguiente = nuevo;
-
-    }
-}
-// Ta mal
-int deQueue(Queue **myQueue){
-    int value = (*myQueue) -> siguiente -> value;
-
-    if( (*myQueue)->siguiente == *myQueue ){
-        free(*myQueue);
-        (*myQueue) = NULL;
-    }
-    else {
-        Queue *aux = (*myQueue)->siguiente;
-
-        (*myQueue)->siguiente = aux->siguiente;
-        free(aux);
-    }
-
-    return value;
+int isEmpty( Pila *myStack ) {
+    return myStack -> tope == 0;
 }
 
-// Programa 2. Suma de enteros largos 
+void push( Pila *myStack, int value ) {
+    Nodo *aux = myStack -> inicio;
 
-void getNumber( Queue *numero ) {
+    // Creamos el nuevo Nodo.
+    Nodo *nuevo = malloc( sizeof( Nodo ) );
+    nuevo -> value = value;
+
+    if( aux == NULL ) {
+        nuevo -> siguiente = NULL;
+        myStack -> inicio = nuevo;
+    }
+    else {
+        nuevo -> siguiente = aux;
+        myStack -> inicio = nuevo;
+    }
+    myStack -> tope++;
+}
+int pop( Pila *myStack ) {
+    int uwu = -1;
+    if( !isEmpty( myStack ) ) {
+        Nodo *aux;
+        
+        aux = myStack -> inicio;
+        uwu = aux -> value;
+
+        myStack -> inicio = myStack -> inicio -> siguiente;
+
+        free( aux ); 
+        myStack -> tope--;
+    }
+    else {
+        printf("La pila esta vacia\n");
+    }
+    return uwu;
+}
+void getNumber( Pila *myStack ) {
     char caracter;
-    // Leer la numero
-    while ((caracter = getchar()) != '\n') {
-        if( !isdigit( caracter ) ) {
-            printf("Ingrese solo numeros\n");
-            exit(1);     
+    while( (caracter = getchar()) != '\n' ) {
+        if( isdigit( caracter ) ) {
+            push( myStack, atoi( &caracter ) );
         }
-        enQueue( &numero, atoi( &caracter ) );
+        else {
+            printf("Escribe un numero valido animal :(");
+            exit(0);
+        }
     }
 }
-
+void showElements( Pila *myStack ) {
+    if( !isEmpty( myStack ) ) {
+        Nodo *aux = myStack -> inicio;
+        while ( aux != NULL ) {
+            printf("%d", aux -> value );
+            aux = aux -> siguiente;
+        } 
+    }   
+    else {
+        printf("La pila esta vacia\n");
+    }
+}
 void main() {
-    Queue *numero1 = NULL;
-    Queue *numero2 = NULL;
+    // Leer los numeros grandes.
+    Pila *numero1 = malloc( sizeof( Pila ) );
+    Pila *numero2 = malloc( sizeof( Pila ) );
 
     printf("Ingrese el primer numero: ");
     getNumber( numero1 );
@@ -68,7 +88,32 @@ void main() {
     printf("Ingrese el segundo numero: ");
     getNumber( numero2 );
 
-    while( numero1 != NULL ) {
-        printf("%d", deQueue( &numero1 ) );
+    int aux = 0;
+
+    Pila *resultado = (Pila*) malloc( sizeof( Pila ) );
+
+    while( !isEmpty(numero1) && !isEmpty(numero2) ) {
+        int res = pop( numero1 ) + pop( numero2 ) + aux;
+        if( res > 9 ) {
+            aux = 1;
+            push( resultado, res - 10 );
+        }
+        else {
+            aux = 0;
+            push( resultado, res );
+        }
     }
+    
+    while( !isEmpty(numero1) ) {
+        int num = pop( numero1 ) + aux;
+        aux = 0;
+        push( resultado, num );
+    }
+    while( !isEmpty(numero2) ) {
+        int num = pop( numero1 ) + aux;
+        aux = 0;
+        push( resultado, num );
+    }
+
+    showElements( resultado );
 }
