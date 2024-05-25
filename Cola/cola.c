@@ -72,6 +72,8 @@ int main(){
     enqueue(*p,2);
     enqueue(*p,3);
 
+    printf("\n");
+
     printf("\tValor fuera cola: %d\n",dequeue(*p));
 
 }

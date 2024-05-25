@@ -84,20 +84,40 @@ void insertOrderedNode( Nodo **inicio, Nodo **final, int valueToInsert ) {
     nuevo -> value = valueToInsert;
     nuevo -> anterior = NULL;
     nuevo -> siguiente = NULL;
-
+    
     Nodo *aux = *inicio;
+    Nodo *anterior = NULL;
     
     while( aux -> value < valueToInsert && aux != NULL ) {
+        anterior = aux;
         aux = aux -> siguiente;
     }   
     if( aux != NULL ) {
-        if( aux -> anterior == NULL ) {
+        if( anterior == NULL ) {
+            // Asignamos los apuntadores
+            nuevo -> siguiente = aux;
+            aux -> anterior = nuevo;
 
+            // Asignamos inicio al nuevo inicio
+            *inicio = nuevo;
         }
-        if( aux -> siguiente == NULL ) {
+        if( aux == NULL ) {
+            // Asignamos los apuntadores
+            nuevo -> anterior = anterior;
+            anterior -> siguiente = nuevo;
 
+            // Asignamos final al nuevo final
+            *final = nuevo;
         }
-        if( aux -> anterior != NULL && aux -> siguiente != NULL ) {
+        if( anterior != NULL && aux != NULL ) {
+            
+            // Enlace del nodo anterior
+            anterior -> siguiente = nuevo;
+            nuevo -> anterior = anterior;
+            
+            // Enlace del nodo despuerior
+            aux -> anterior = nuevo;
+            nuevo -> siguiente = aux;
 
         }
         
@@ -180,11 +200,16 @@ void main( void ) {
     addElementToStart(&p,&q,3);
     addElementToStart(&p,&q,4);
     addElementToStart(&p,&q,5);
-    addElementToStart(&p,&q,6);
+    addElementToStart(&p,&q,7);
 
     showNodo(q);
+    printf("\n");
 
-    eliminarNodo(&p,&q,5);
+    deleteNodeByValue(&p,&q,5);
+    showNodo(q);
+    printf("\n");
+
+    insertOrderedNode( &p, &q, 6);
 
     showNodo(q);
 
