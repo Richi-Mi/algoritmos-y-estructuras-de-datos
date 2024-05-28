@@ -1,80 +1,105 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-typedef struct Cola {    
+typedef struct Nodo {
+    int value;
 
-    int valor;
-    struct Cola *siguiente;
+    struct Nodo *siguiente;
+} Nodo;
 
-} Cola;
+typedef struct Queue {
+    struct Nodo *inicio;
 
-void enqueue(Cola **myNode, int x){
+    int i;
+} Queue;
 
-    Cola *nuevo = (Cola*)malloc(sizeof(Cola));
-    nuevo->valor = x;
-
-    if( *myNode == NULL ) {
+void enQueue( Queue *myQueue, int element ) {
+    // Creacion del nuevo nodo
+    Nodo *nuevo = malloc( sizeof( Nodo ) );
+    nuevo -> value = element;
+    // Inicia en el primer elemento
+    if( myQueue -> inicio == NULL ) {
         nuevo -> siguiente = nuevo;
-        *myNode = nuevo;
+        myQueue -> inicio = nuevo;
     }
+    // Ya hay elementos
     else {
-        Cola *aux = *myNode;
-        while( aux -> siguiente != *myNode ) {
-            aux = aux -> siguiente;
-        }
+        Nodo *aux = myQueue -> inicio;
         nuevo -> siguiente = aux -> siguiente;
         aux -> siguiente = nuevo;
 
+        myQueue -> inicio = nuevo;
     }
 }
-int deenqueue(Cola **p){
+int deQueue( Queue *myQueue ) {
+    // Nodo *elementToDeQueue = myQueue -> inicio -> siguiente;
+    int element = 0;
+    if( myQueue -> inicio == NULL )
+        return element; // Comprobamos que no este vacia 
 
-    int v = (*p)->siguiente->valor;
+    // Si solo hay un elemento.
+    if( myQueue -> inicio == myQueue -> inicio -> siguiente ) {
+        element = myQueue -> inicio -> value;
 
-    if((*p)->siguiente == *p){
-        free(*p);
-        (*p) = NULL;
+        free( myQueue -> inicio );
+        myQueue -> inicio = NULL;
+
+        return element;
     }
+    else {
+        Nodo *aux = myQueue -> inicio -> siguiente;
+        element = aux -> value;
 
-    else{
+        myQueue -> inicio -> siguiente = aux -> siguiente; 
+        free( aux );
 
-        Cola *aux = (*p)->siguiente;
-
-        (*p)->siguiente = aux->siguiente;
-        free(aux);
-
+        return element;
     }
-
-    return v;
 
 }
+void showElements( Queue *myQueue ) {
+    Nodo *aux = myQueue -> inicio;
+    if( aux != NULL ) {
+        if ( aux -> siguiente == myQueue -> inicio ) {
+            printf("%d", myQueue -> inicio -> value );
+        }
+        else {         
+            while ( aux -> siguiente != myQueue -> inicio ) {
+                printf("%d, ", aux -> value );
+                aux = aux -> siguiente;
 
-int main() {
-    
-    printf("Colas: Implementación Dinamica\n");
-    Cola *p = NULL;
+                if( aux -> siguiente == myQueue -> inicio ) {
+                   printf("%d", aux -> value );
+                }
+            }     
+        }
+    }
+    else {
+        printf("Cola Vacia \n");
+    }
+}
+int main( void ) {
+    Queue cola = { 0 };
+    srand( time( NULL ) );
 
-    //encolamos vario elementos
-    enqueue(&p,1);
-    enqueue(&p,2);
-    enqueue(&p,3);
+    // 2. Inicializar la cola con valores aleatorios
 
-    //desencolamos un elemento (sale el 1)
-    printf("%d\n",deenqueue(&p));
+    enQueue(&cola, 10);
+    enQueue(&cola, 20);
+    enQueue(&cola, 30);
+    enQueue(&cola, 40);
+    enQueue(&cola, 50);
+    enQueue(&cola, 60);
 
-    //desencolamos un elemento (sale el 2)
-    printf("%d\n",deenqueue(&p));
+    showElements( &cola );
+    printf("\n");
 
-    //encolamos más elementos
-    enqueue(&p,4);
-    enqueue(&p,5);
-    enqueue(&p,6);
+    deQueue( &cola );
+    deQueue( &cola );
+    deQueue( &cola );
 
-    //desencolamos un elemento (sale el 3)
-    printf("%d\n",deenqueue(&p));
+    showElements( &cola );
 
-    //desencolamos mientras queden elementos en la cola
-    while(p != NULL)
-        printf("%d\n",deenqueue(&p));
-
+    return 0;
 }
