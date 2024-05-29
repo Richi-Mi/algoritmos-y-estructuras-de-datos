@@ -15,17 +15,30 @@ int right( int i ) {
 void heapshort( int arr[], int size ) {
 
 }
-void showElements( int arr[], int size, int i ) {
-    if( i > size ) {
-        return;
+void buildMaxHeap( int arr[], int size ) {
+    int i;
+    for( i = 1; i < size; i++ ) { 
+        while ( arr[i] > arr[ parent(i) ] ) {
+            int aux = arr[i];
+            arr[i] = arr[ parent(i) ];
+            arr[ parent(i) ] = aux;
+        } 
     }
-    showElements( arr, size, left(i) );
-    showElements( arr, size, right(i) );
+}
+void showElements( int arr[], int size ) {
+    int i;
+    for( i = 0; i < size; i++ )
+        printf("%d -> ", arr[i]);
+    printf("\n");
+}
+void enQueue( int arr[], int element ) {
 
-    printf("%d - %d\n", left(i), right(i));
+}
+int deQueue( int arr[] ) {
+    return 0;
 }
 int main( void ) {
-    int MAX, i, option;
+    int MAX, i, option, element;
 
     srand( time( NULL ) );
 
@@ -41,9 +54,16 @@ int main( void ) {
     for( i = 0; i < MAX; i++ ) 
         arbol[i] = rand() % 100;
 
-    // 3. Llamar a la función para inicializar el arbol y mostrar los elementos del arreglo.
-    heapshort( arbol, MAX );
 
+    // 3. Llamar a la función para inicializar el arbol y mostrar los elementos del arbol.
+    int prueba[] = {10, 1, 5, 23, 12, 14, 7};
+
+    showElements( prueba, 7 );
+    printf("\n");
+    buildMaxHeap( prueba, MAX );
+    showElements( prueba, 7 );
+
+/*
     do {
         printf("*----------------------*\n");
         printf("| 1. Encolar           |\n");
@@ -56,10 +76,23 @@ int main( void ) {
         scanf("%d", &option);
 
         switch ( option ) {
+            case 1:
+                printf("Ingresa el elemento a agregar en la cola\n");
+                scanf("%d", &element );
+
+                enQueue( arbol, element );
+                break;
+            case 2:
+                int deQueueElement = deQueue( arbol );
+                printf("Elemento desencolado: %d\n", deQueueElement );
+                break;
+            case 3:
+                printf("Elementos desencolados. \n");
+                break;
             case 4:
-                showElements( arbol, MAX, 1);
+                showElements( prueba, MAX );
                 break;
         }
-    } while( option != 0 );
+    } while( option != 0 ); */
     return 0;
 }
