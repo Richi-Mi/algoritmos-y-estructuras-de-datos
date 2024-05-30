@@ -1,0 +1,24 @@
+Introducción --> Salvador
+Que es la bolsa --> Emilio
+Historia --> David
+Objetivos --> Salvador
+Funcionamiento --> Emilio
+Mercados:
+	Derivado --> David
+	Cambiario --> Salvador
+	De deuda --> Emilio
+	Accionario --> Salvador
+Micro --> Salvador
+Macro --> Emilio
+Aspectos micro y macro --> Emilio
+Clasificación:
+	Activiada o giro, procedencia de capital, jurídica --> David
+	Tamaño, cuota que poseen --> Emilio
+	Capitalización --> Salvador
+Índices bursátil --> Salvador
+Bolsa Mexicana de Valores --> David
+Historia BMV --> Emilio
+Funcionamientos BMV --> Salvador
+Objetivos BMV --> David
+Tamaño BMV --> Emilio
+Conclusión --> Salvador

@@ -1,0 +1,70 @@
+
+    Una tabla Hash, matriz asociativa, hoshing, mapa hash, tabla de dispersión o tabla fragmentada es
+una estructura de datos que asocia llaves o claves ocon valores.
+    La operación principal que soprta de manera eficiente es la busqueda
+busqueda mediante transformación de claves (hashing).
+    El método de transformación de claves consiste en convertir la clave dada (numérica o alfanumérica) en una
+dirección (índice) dentro del array.
+    La correspondencia entre las claves y la dirección en el medio de almacenamiento en el array se establece por
+una función de conversión (función hash).
+
+
+                                            Tabla de transformación de claves
+                                                    -----------------
+    345671234 --> función de conversión     [0]     |               |
+                                                    -----------------
+                                            [1]     |               |
+                                                    -----------------                                            
+                                            [2]     |               |
+                                                    -----------------                                            
+                                            [3]     |               |
+                                                    -----------------                                            
+                                                    |               |
+                                                    -----------------                                                    
+                                            [75]    | key:345671234 |
+                                                    -----------------                                            
+                                                    |               |
+                                                    -----------------                                                    
+                                            [98]    |               |
+                                                    -----------------                                            
+                                            [99]    |               |
+                                                    -----------------                                            
+            
+
+    La función de transformación de clave H(k) conveirte la clave(k) en una dirección (d).
+    La función H es, por consiguiente, una función de paso oconversión de múltiples claves a dirección.
+    ¿Cómo resolver la situación de que H no produce la posición del elemento asociado?
+Se debe de utilizar algún método para priducir una dirección alternativa, es decir, d'; y si esta no es aún la
+posición del elemento deseado, se produce un tercer índice d'', y así sucesivamente.
+    En el caso en el que una clave distinta de la deseada esra en la posición identidicada se denomina colisión.
+la tarea de generación de índices alternativos se denomina tratamiento de colisiones.
+    La elección de una buena función de conversión exige un tratamiento idóneo de colisiones, es decir; la
+reducción del número de colisiones.
+
+        Método de tranformación de claves
+
+    Los métodos de transformación de claves convierten vlaves en direcciones.
+    La función de conversión equivale a una caja negra que podriamos llamar
+calculadora de direcciones.
+    Cuando se desea localizar un elemento de clave X1, el indicador de direcciones indicará en que posición
+del arreglo estará posicionado el elemento
+
+
+                ---------------------------                     -----------------
+        x -->  | Calculador de direcciones | ----->     [0]     |               |
+                ---------------------------                     -----------------
+                                                        [1]     |               |
+                                                                -----------------                                            
+                                                        [2]     |               |
+                                                                -----------------                                            
+                                                        [3]     |               |
+                                                                ----------------- 
+
+        Truncamiento
+    Ignora la parte de la clave y se utiliza la parte restante directamente como índice
+(considerando campos no numéricos y sus códigos numéricos).
+    Ejem:
+    Si las claves son enteros de 8 dígitos y la tabla de transformación tiene 1000 posiciones, entonces
+el primero, segundo y quinto dígitos desde la derecha a la izquierda pueden formar la función de conversión
+
+    El truncameinto es un método muy rápido pero falla para distrbuir las claves de manera uniforme

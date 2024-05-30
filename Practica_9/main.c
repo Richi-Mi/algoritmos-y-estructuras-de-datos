@@ -6,23 +6,34 @@ typedef struct Nodo {
     int value;
 
     struct Nodo *siguiente;
-} Nodo;
+
+}Nodo;
 
 typedef struct Queue {
     struct Nodo *inicio;
 
     int i;
-} Queue;
+
+}Queue;
+
+int isEmpty( Queue *myStack ) {
+    return myStack == NULL;
+}
 
 void enQueue( Queue *myQueue, int element ) {
+    
+    
     Nodo *aux = myQueue -> inicio;
+
 
     
 }
 
 int main( void ) {
-    Queue cola = { 0, NULL };
-    int MAX;
+    
+    int i,MAX,num;
+
+    Queue *cola = { 0, NULL };
 
     srand( time( NULL ) );
 
@@ -34,6 +45,18 @@ int main( void ) {
     scanf("%d", &MAX );
 
     // 2. Inicializar la cola con valores aleatorios.
+    printf("*--------------------------------*\n");
+    printf("| Escriba los numeros en la cola |\n");
+    printf("*--------------------------------*\n");
+
+
+
+    for(i=0 ; i<MAX ; i++){
+
+        enQueue(cola,rand()%99+1);
+
+
+    }
     
     return 0;
 }
