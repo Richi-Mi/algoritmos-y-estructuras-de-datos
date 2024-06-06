@@ -47,7 +47,10 @@ int main( void ) {
                     scanf("%d", &element );
 
                     n++;
-                    maxHeapInsert( arbol, n, element );
+                    if( n == 0 )
+                        arbol[0] = element;
+                    else 
+                        maxHeapInsert( arbol, n, element );
                 }
                 else {
                     printf("Cola llena. \n");
