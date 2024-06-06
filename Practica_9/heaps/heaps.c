@@ -1,3 +1,6 @@
+int parent( int i ) {
+  return i / 2;
+}
 void changeAtoB(int *a, int *b) {
     int aux = *a;
     *a = *b;
@@ -32,26 +35,21 @@ void heapSort(int arr[], int n) {
     for (int i = n - 1; i >= 0; i--) {
       changeAtoB( &arr[0], &arr[i]);
       maxHeapify(arr, i, 0);
+  }
+}
+void heapIncreaseKey( int arr[], int i, int key ) {
+  if( key < arr[ i ] ) {
+    printf("La nueva llave es menor que la anterior");
+  }
+  else {
+    arr[i] = key;
+    while( i >= 0 && (arr[ parent(i) ] > arr[i]) ) {
+      changeAtoB( &arr[i], &arr[parent(i)] );
+      i = parent(i);
     }
   }
-  
-void showElements(int arr[], int n) {
-    for (int i = 0; i < n; ++i)
-      printf("%d ", arr[i]);
-    printf("\n");
 }
-void enQueue( int arr[], int n, int m, int element ) {
-    arr[n] = element;
-    maxHeapify(arr, m, n);
-}
-int deQueue( int arr[], int n ) {
-    int deQueueElement = arr[0], aux = arr[1];
-
-    for( int i = 0; i < n; i++ ) {
-        arr[i] = aux;
-        aux = arr[ i + 1];
-    }
-    buildMaxHeap( n, arr );
-    
-    return deQueueElement;
+void maxHeapInsert( int arr[], int max, int key ) {
+  arr[ max ] = -1000;
+  heapIncreaseKey( arr, max, key );
 }

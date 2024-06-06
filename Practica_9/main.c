@@ -41,25 +41,41 @@ int main( void ) {
 
         switch ( option ) {
             case 1:
-                printf("Ingresa el elemento a agregar en la cola\n");
-                scanf("%d", &element );
 
-                enQueue( arbol, n, MAX, element );
-                n++;
+                if( n != (MAX - 1) ) {
+                    printf("Ingresa el elemento a agregar en la cola\n");
+                    scanf("%d", &element );
+
+                    n++;
+                    maxHeapInsert( arbol, n, element );
+                }
+                else {
+                    printf("Cola llena. \n");
+                }
 
                 break;
             case 2:
                 
-                int deQueueElement = deQueue( arbol, n );
-                printf("Elemento desencolado: %d\n", deQueueElement );
-                n--;
+                if( n >= 0 ) {
+                    int deQueueElement = deQueue( arbol, n );
+                    printf("Elemento desencolado: %d\n", deQueueElement );
+                    n--;
+                }
+                else {
+                    printf("Cola vacia. \n");
+                }
 
                 break;
             case 3:
+                int i;
+                for( i = 0; i < MAX; i++ ) {
+                    deQueue( arbol, n );
+                    n--;
+                } 
                 printf("Elementos desencolados. \n");
                 break;
             case 4:
-                showElements( arbol, n );
+                showElements( arbol, n + 1 );
                 break;
         }
     } while( option != 0 ); 
