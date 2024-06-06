@@ -1,0 +1,25 @@
+        ARIMÉTICA MODULAR
+    Convertir la clave a un entero, dividir por el tamaño del rango del índice y tomar el resto como resultado.
+La función de conversión utilizada es mod (módulo a restode la división entera).
+    h(x) = X mod m
+Donde "m" es el tamaño del arreglo ocn índice de 0 a m-1
+    La mejro elección de los módulos son los números primos.
+Por ejemplo es un arreglo de 1000 elementos se puede elejir 997 o 1009
+
+        EJEMPLOS:                               -------------
+    Tabla hash de 6 direcciones         0       |    18     |
+                                                -------------
+h(18) = 18 mod 6 = 0                    1       |    19     |
+h(19) = 19 mod 6 = 1                            -------------
+h(19) = 19 mod 6 = 2                    2       |    20     |
+h(1234) = 1234 mod 6 = 4                        -------------
+                                                |           |
+                                                -------------
+                                        4       |   1234    |
+                                                -------------
+                                                |           |
+                                                -------------
+
+Si se desea que las direcciones vayan de 0 hasta m, la funcón de conversión debe ser:
+
+    h(x) = x mod (m+1)

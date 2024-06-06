@@ -24,7 +24,9 @@ void buildMaxHeap( int MAX, int arr[] ) {
     for (int i = MAX / 2 - 1; i >= 0; i--)
         maxHeapify(arr, MAX, i);
 }
+
 void heapSort(int arr[], int n) {
+
     buildMaxHeap( n, arr );
   
     for (int i = n - 1; i >= 0; i--) {

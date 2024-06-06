@@ -1,0 +1,45 @@
+        PLEGAMIENTO
+    
+    La técnica del plagamieto consiste en la partición de la clabe en diferentes partes y la combinación
+de las partes en un modo conveniente (a menudo utilizando suma o multiplicación para obtener el índice)
+
+    La calve X se divide en varias partes, X1,X2,X3,...Xn donde cada parte, con la única posible exceopción de la última,
+tiene el mínimo número de dígitos que la dirección más altaque podría ser utilizada.
+
+    A continuación se suman todas las partes:
+h(x) = X1 + X2 + X3 +...+Xn
+
+    En esta operación se desprecian los dígitos más significativos que se obtengan de arrstre o acarreo.
+
+        EJEMPLO:
+    Un entero de 8 dígitos se puede dividir en grupos de tres, tres y dos dígitos, los grupos se suman juntos y se truncan
+si es necesario para que esten en el rango adecuado de indices.
+
+    Si la clave es = 62538194   y el número de direcciones entonces:
+
+    6 2 5 3 8 1 9 4                                            
+    ----- ----- ---                                             -----------------
+    X1    X2    X3                                      [0]     |               |
+                                                                -----------------
+                                                        [1]     |               |
+        625                                                     -----------------
+      + 381                                             [2]     |               |
+         94                                                     -----------------
+        ---                                                     |               |
+       1100                                                     -----------------
+                                                        [100]   |   62538194    |
+    No se considera --> 1° "1"                                  -----------------                                            
+                                                                |               |
+                                                                -----------------                                            
+                                                        [998]   |               |
+                                                                -----------------                                            
+                                                        [999]   |               |
+                                                                -----------------
+
+        EJEMPLO 2:
+    Los números de empleados (claves) constan de cuatro dígitos y las direcciones reales son 100.
+Calcular las direcciones correspondientes por el método de plegamiento
+
+    h(4205) = 42+05 = 47
+    h(5148) = 81+48 = 129
+    h(3355) = 33+55 = 88
