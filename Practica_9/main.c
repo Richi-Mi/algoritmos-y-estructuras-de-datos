@@ -1,44 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-// Funciones para crear el monticulo.
-int parent( int i ) {
-    return i / 2;
-}
-int left( int i ) {
-    return 2*i;
-}
-int right( int i ) {
-    return 2*i + 1;
-}
-void heapshort( int arr[], int size ) {
-
-}
-void buildMaxHeap( int arr[], int size ) {
-    int i;
-    for( i = 1; i < size; i++ ) { 
-        while ( arr[i] > arr[ parent(i) ] ) {
-            int aux = arr[i];
-            arr[i] = arr[ parent(i) ];
-            arr[ parent(i) ] = aux;
-        } 
-    }
-}
-void showElements( int arr[], int size ) {
-    int i;
-    for( i = 0; i < size; i++ )
-        printf("%d -> ", arr[i]);
-    printf("\n");
-}
-void enQueue( int arr[], int element ) {
-
-}
-int deQueue( int arr[] ) {
-    return 0;
-}
+#include "heaps.h"
+  
 int main( void ) {
-    int MAX, i, option, element;
+    int MAX, i, option, element, n;
 
     srand( time( NULL ) );
 
@@ -51,19 +17,17 @@ int main( void ) {
 
     // 2. Inicializar el arreglo con valores aleatorios
     int arbol[MAX];
+    n = MAX - 1;
     for( i = 0; i < MAX; i++ ) 
         arbol[i] = rand() % 100;
-
-
     // 3. Llamar a la función para inicializar el arbol y mostrar los elementos del arbol.
-    int prueba[] = {10, 1, 5, 23, 12, 14, 7};
+    printf("Elementos en el arbol: \n");
+    heapSort( arbol, n );
 
-    showElements( prueba, 7 );
+    showElements( arbol, MAX );
     printf("\n");
-    buildMaxHeap( prueba, MAX );
-    showElements( prueba, 7 );
 
-/*
+
     do {
         printf("*----------------------*\n");
         printf("| 1. Encolar           |\n");
@@ -80,19 +44,24 @@ int main( void ) {
                 printf("Ingresa el elemento a agregar en la cola\n");
                 scanf("%d", &element );
 
-                enQueue( arbol, element );
+                enQueue( arbol, n, MAX, element );
+                n++;
+
                 break;
             case 2:
-                int deQueueElement = deQueue( arbol );
+                
+                int deQueueElement = deQueue( arbol, n );
                 printf("Elemento desencolado: %d\n", deQueueElement );
+                n--;
+
                 break;
             case 3:
                 printf("Elementos desencolados. \n");
                 break;
             case 4:
-                showElements( prueba, MAX );
+                showElements( arbol, n );
                 break;
         }
-    } while( option != 0 ); */
+    } while( option != 0 ); 
     return 0;
 }
