@@ -23,3 +23,10 @@ h(1234) = 1234 mod 6 = 4                        -------------
 Si se desea que las direcciones vayan de 0 hasta m, la funcón de conversión debe ser:
 
     h(x) = x mod (m+1)
+
+        EJEMPLO 2
+    La clave de busqueda es una cadena de caracteres (como el nombre)
+Primero hay que obtener las direcciones de conversión.
+
+    El método más simple es asignar a cada carácter de la cadena un valor entero
+Por ejemplo A=1, B=2, C=3,... y sumar los valores de los caracteres en la cadena

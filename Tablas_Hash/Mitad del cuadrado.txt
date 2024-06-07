@@ -1,0 +1,17 @@
+        MITAD DE CUADRADOS
+
+    Este método consiste en calcular el cuadrado de la clave x
+    La función se define como h(x) = c, donde "c" se obtiene eliminando dígitos a ambos extremos de x^2
+    Se debe utilizar los mismo posiciones de x^2 para todas las claves
+
+        EJEMPLO:
+    Una empresa tiene ochenta empleados y cada uno tiene claves de cuatro dígitos y el conjunto
+de direcciones de memoria va de 0 a 100
+
+    ---------------------------------------------
+    |   x   |   4205    |   7148    |   3350    |
+    ---------------------------------------------
+    |  x^2  |  17682025 | 51093904  | 111222500 |
+    ---------------------------------------------
+    |  h(x) |     32    |    93     |    22     |
+    ---------------------------------------------

@@ -70,8 +70,8 @@ int main( void ) {
 
                 break;
             case 3:
-                int i;
-                for( i = 0; i < MAX; i++ ) {
+                //int i;
+                for(int i = 0; i < MAX; i++ ) {
                     deQueue( arbol, n );
                     n--;
                 } 
