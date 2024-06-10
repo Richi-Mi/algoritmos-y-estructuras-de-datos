@@ -70,12 +70,13 @@ int main( void ) {
 
                 break;
             case 3:
-                //int i;
-                for(int i = 0; i < MAX; i++ ) {
-                    deQueue( arbol, n );
-                    n--;
-                } 
                 printf("Elementos desencolados. \n");
+                for(int i = 0; i < MAX; i++ ) {
+                    int l = deQueue( arbol, n );
+                    n--;
+                    printf("%d, ", l);
+                } 
+                printf("\n");
                 break;
             case 4:
                 showElements( arbol, n + 1 );
