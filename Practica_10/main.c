@@ -57,6 +57,7 @@ void addElementToStart( Student **inicio, Student **final, int boleta, Letter *n
         *inicio = new;
     }
 }
+
 void addElementToEnd( Student **inicio, Student **final, int boleta, Letter *name, Letter *lastnames ) {
     
     // Creación del Student a agregar.
@@ -82,8 +83,48 @@ void addElementToEnd( Student **inicio, Student **final, int boleta, Letter *nam
     }
 
 }
+void insertOrderedStudent( Student **inicio, Student **final, int boleta, Letter *name, Letter *lastnames ) {
+    // Creación del Student a agregar.
+    Student *new  = malloc( sizeof( Student ) );
+    new -> boleta = boleta;
+    new -> name   = name;
+    new -> lastnames = lastnames;
+    new -> before = NULL;
+    new -> next  = NULL;
+    
+
+    char caracterLastname = (*lastnames).siguiente -> value;
+
+    if( (*inicio) != NULL ) {
+        if( lastnames -> siguiente -> value <= (*inicio) -> lastnames -> siguiente -> value ) {
+            addElementToStart( inicio, final, boleta, name, lastnames );
+            free( new );
+            return;
+        }
+        if( lastnames -> siguiente -> value > (*final) -> lastnames -> siguiente -> value ) {
+            addElementToEnd( inicio, final, boleta, name, lastnames );
+            free( new );
+            return;
+        }
+    }
+    else {
+        addElementToStart( inicio, final, boleta, name, lastnames );
+    }
+    /*
+    Student *aux = (*inicio);
+    while( aux != NULL && aux -> lastnames -> value < lastnames -> value ) {
+        aux = aux -> next;
+    }
+    if( aux != NULL ) {
+        new -> before = aux;
+        new -> next = aux -> next;
+
+        aux -> next -> before = new;
+        aux -> next = new;
+    }*/
+
+}
 void cleanString( Letter *inicio ) {
-    printf("Usuario Eliminado: ");
     while( inicio != NULL ) {
         Letter *aux = inicio;
 
@@ -93,7 +134,7 @@ void cleanString( Letter *inicio ) {
 
         free( aux );
     }
-    printf("\n");
+    printf(" ");
 }
 void deleteStudentByHisBoleta( Student **inicio, Student **final, int boleta ) {
     // Creamos el Student auxiliar para poder referenciarlo al eliminarlo.
@@ -119,7 +160,7 @@ void deleteStudentByHisBoleta( Student **inicio, Student **final, int boleta ) {
         }
         // Significa que es el ultimo elemento a eliminar.
         if( siguiente == NULL ) {
-            (*inicio)        = aux -> before;
+            (*final)         = aux -> before;
             anterior -> next = aux -> next;
         }
         // Significa que el elemento a eliminar se encuentra entre 1 < n < max - 1 
@@ -145,8 +186,6 @@ void getStringFromConsole( Letter **string ) {
         current = current->siguiente;
     }
 }
-
-
 // METODOS PARA PODER MOSTRAR LA INFORMACIÓN.
 void showString( Letter *inicio ) {
     Letter *aux = inicio;
@@ -155,7 +194,7 @@ void showString( Letter *inicio ) {
         aux = aux -> siguiente;
     }
 }
-void showStudents( Student *s ) {
+void showStudentsByAsc( Student *s ) {
     Student *aux = s;
     while ( s != NULL ) {
         printf("\n Estudiante: ");
@@ -166,11 +205,22 @@ void showStudents( Student *s ) {
         s = s -> next;
     }
 }
+void showStudentsByDesc( Student *s ) {
+    Student *aux = s;
+    while ( s != NULL ) {
+        printf("\n Estudiante: ");
+        showString( s -> name );
+        printf(" ");
+        showString( s -> lastnames );
+        printf("\n Boleta: %d \n", s -> boleta );
+        s = s -> before;
+    }
+}
 
 int main( void ) {
     // 1. Inicilaizamos el inicio y final de la lista.
     Student *inicio, *final;
-    int opt, i = 0;
+    int opt, mode, boleta;
 
     inicio = NULL;
     final  = NULL;
@@ -189,15 +239,11 @@ int main( void ) {
 
         scanf("%d", &opt );
 
-        fflush( stdin );
-
         // Dar de alta un alumno.
         if( opt == 1 ) {
 
             Letter *name = NULL;
             Letter *lastnames = NULL;
-            int boleta;
-
             getchar(); // Para tomar el ultimo '\n'
 
             printf("Ingrese el nombre del alumno: ");
@@ -212,25 +258,39 @@ int main( void ) {
             scanf("%d", &boleta);
             printf("\n");
 
-            addElementToStart( &inicio, &final, boleta, name, lastnames );
-
-            i++;
+            insertOrderedStudent( &inicio, &final, boleta, name, lastnames );
             fflush( stdin );
         }
+        // Mostrar usuarios.
         if( opt == 2 ) {
-            showStudents( inicio );
+            printf("Mostrar de forma: Ascendente (1), Descendente (2): ");
+            scanf("%d", &mode);
+
+            if( mode == 1 ) 
+                showStudentsByAsc( inicio );
+            if( mode == 2 ) 
+                showStudentsByDesc( final );
+            
+            printf("\n");
+
         }
         if( opt == 3 ) {
 
         }
+        // Eliminar Usuario
         if( opt == 4 ) {
-            int boleta;
+
             printf("Ingrese la boleta: ");
             scanf("%d", &boleta );
             printf("\n");
 
+            printf("Usuario Eliminado: ");
             deleteStudentByHisBoleta( &inicio, &final, boleta );
+            printf("\n");
+
         }
+        fflush( stdin );
     } while ( opt != 0 );
+
     return 0;
 }
