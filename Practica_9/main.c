@@ -71,7 +71,7 @@ int main( void ) {
                 break;
             case 3:
                 printf("Elementos desencolados. \n");
-                for(int i = 0; i < MAX; i++ ) {
+                for(int i = 0; i < n; i++ ) {
                     int l = deQueue( arbol, n );
                     n--;
                     printf("%d, ", l);
