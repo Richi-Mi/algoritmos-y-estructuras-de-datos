@@ -83,7 +83,9 @@ void addElementToEnd( Student **inicio, Student **final, int boleta, Letter *nam
     }
 
 }
+
 void insertOrderedStudent( Student **inicio, Student **final, int boleta, Letter *name, Letter *lastnames ) {
+
     // Creación del Student a agregar.
     Student *new  = malloc( sizeof( Student ) );
     new -> boleta = boleta;
@@ -91,38 +93,49 @@ void insertOrderedStudent( Student **inicio, Student **final, int boleta, Letter
     new -> lastnames = lastnames;
     new -> before = NULL;
     new -> next  = NULL;
-    
 
+    Student *aux = *inicio;
+    Student *anterior = NULL;
+    
     char caracterLastname = (*lastnames).siguiente -> value;
 
-    if( (*inicio) != NULL ) {
-        if( lastnames -> siguiente -> value <= (*inicio) -> lastnames -> siguiente -> value ) {
-            addElementToStart( inicio, final, boleta, name, lastnames );
-            free( new );
-            return;
-        }
-        if( lastnames -> siguiente -> value > (*final) -> lastnames -> siguiente -> value ) {
-            addElementToEnd( inicio, final, boleta, name, lastnames );
-            free( new );
-            return;
-        }
-    }
-    else {
-        addElementToStart( inicio, final, boleta, name, lastnames );
-    }
-    /*
-    Student *aux = (*inicio);
-    while( aux != NULL && aux -> lastnames -> value < lastnames -> value ) {
-        aux = aux -> next;
+    while( aux != NULL && caracterLastname >= aux -> lastnames -> siguiente -> value ) {
+        anterior = aux;
+        aux      = aux -> next;
     }
     if( aux != NULL ) {
-        new -> before = aux;
-        new -> next = aux -> next;
+        printf("Llegue ");
+        if( anterior == NULL ) {
+            printf("LO AGREGE AL INICIO");
+            // Asignamos los apuntadores
+            new -> next = aux;
+            aux -> before = new;
 
-        aux -> next -> before = new;
-        aux -> next = new;
-    }*/
+            // Asignamos inicio al nuevo inicio
+            *inicio = new;
+        }
+        if( aux == NULL ) {
+            printf("LO AGREGE AL FINAL");
+            // Asignamos los apuntadores
+            new -> before    = anterior;
+            anterior -> next = new;
 
+            // Asignamos final al new final
+            *final = new;
+        }
+        if( anterior != NULL && aux != NULL ) {
+            printf("LO AGREGUE EN MEDIO");
+            
+            // Enlace del nodo before
+            anterior -> next = new;
+            new -> before    = anterior;
+            
+            // Enlace del nodo despuerior
+            aux -> before = new;
+            new -> next = aux;
+        }
+        
+    }
 }
 void cleanString( Letter *inicio ) {
     while( inicio != NULL ) {
@@ -216,6 +229,13 @@ void showStudentsByDesc( Student *s ) {
         s = s -> before;
     }
 }
+Student* searchByBoleta( Student **inicio, int boleta ) {
+    Student *aux = *inicio;
+    while( aux != NULL && aux -> boleta != boleta ) {
+        aux = aux -> next;
+    }
+    return aux;
+}
 
 int main( void ) {
     // 1. Inicilaizamos el inicio y final de la lista.
@@ -258,7 +278,8 @@ int main( void ) {
             scanf("%d", &boleta);
             printf("\n");
 
-            insertOrderedStudent( &inicio, &final, boleta, name, lastnames );
+            addElementToEnd( &inicio, &final, boleta, name, lastnames );
+
             fflush( stdin );
         }
         // Mostrar usuarios.
@@ -275,7 +296,48 @@ int main( void ) {
 
         }
         if( opt == 3 ) {
+            printf("\nIngrese la boleta del usuario a modificar: ");
+            scanf("%d", &boleta);
 
+            Student *update = searchByBoleta( &inicio, boleta );
+
+            fflush( stdin );
+
+            printf(" ** Datos ** \n\n Nombre: ");
+            showString( update -> name );
+            printf("\n Apellidos: ");
+            showString( update -> lastnames );
+            printf("\n\n");
+
+            if( update != NULL ) {
+                printf("\nIngresa que dato quieres modificar: \n 1) Nombre \n 2) Apellidos \n");
+                fflush( stdin );
+                int toModify;
+                scanf("%d", &toModify );
+
+                if( toModify == 1 ) {
+                    Letter *newName = malloc( sizeof( Letter ) );
+                    
+                    printf("Ingrese el nombre nuevo: ");
+                    getStringFromConsole( &newName );
+
+                    // Limpiar anterior nombre.
+                    // cleanString( update -> name );
+                    // fflush( stdin );
+                }
+                else {
+                    // Limpiar anterior nombre.
+                    cleanString( update -> lastnames );
+                    update -> lastnames = malloc( sizeof( Letter ) );
+
+                    fflush( stdin );
+
+                    printf("Ingrese el apellidos nuevo: ");
+                    getStringFromConsole( &(update -> lastnames) );
+                }
+            }
+            else 
+                printf("X -  Estudiante no encontrado\n");
         }
         // Eliminar Usuario
         if( opt == 4 ) {
