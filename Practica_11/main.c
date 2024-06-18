@@ -76,7 +76,7 @@ int metodoDivision( int k ){
 int main(){
 
     // 1. Obtener las claves del archivo. 
-    int keys[ keyArchiveSize ], i, option, valueToInsert;
+    int keys[ keyArchiveSize ], i, option, valueToInsert, key;
     getKeysFromFile( keys );
 
     // 2. Crear tabla hash.
@@ -140,7 +140,19 @@ int main(){
             }
         }
         if( option == 3 ) {
+            printf("Ingrese la clave a buscar: ");
+            scanf("%d", &key );
 
+            int indice = metodoDivision( key );
+            Nodo *inicio = tablaHash[ indice ];
+
+            while( inicio != NULL && inicio -> valor != key )
+                inicio = inicio -> next;
+
+            if( inicio != NULL ) 
+                printf("Clave encontrada en el indice: %d\n", indice );
+            else 
+                printf("La clave no se encuentra en la tabla hash\n");
         }
 
         if( option == 4 ) {            
