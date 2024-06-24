@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-#define m 311
+#define m 100
 #define keySize 16
-#define keyArchiveSize 300
+#define keyArchiveSize 150
+
 typedef struct Nodo {
     int valor;
 
@@ -74,11 +76,26 @@ void getKeysFromFile( int arr[] ) {
     fclose( file );
 }
 
-int metodoDivision( int k ){
-    return k % m;
+void numeroDigitos(int *num) {
+    if (*num == 0);
+    (int) log10(*num) + 1;
 }
 
-// PROGRAMA 1.
+// Función de plegamiento
+int metodoPlegamiento(int num) {
+    int sum = 0;
+    numeroDigitos(&num);
+    int divisor = 100;
+
+    while (num > 0) {
+        sum += num % divisor;
+        num /= divisor;
+    }
+
+    return sum % 100;
+}
+
+// PROGRAMA 2.
 
 int main(){
 
@@ -93,8 +110,8 @@ int main(){
         tablaHash[i] = NULL;
 
     // 3. Inicializar la tabla Hash.
-    for( i = 0; i < 300; i++ ) {
-        int indice = metodoDivision( keys[i] );
+    for( i = 0; i < 150; i++ ) {
+        int indice = metodoPlegamiento( keys[i] );
 
         Nodo *new = malloc( sizeof( Nodo ) );
         new -> valor = keys[i];
@@ -125,7 +142,7 @@ int main(){
             printf("Ingrese la clave a ingresar (8 digitos): ");
             scanf("%d", &valueToInsert );
 
-            int indice = metodoDivision( valueToInsert );
+            int indice = metodoPlegamiento( valueToInsert );
             Nodo *inicio = tablaHash[indice];
 
             addElementToTable( &tablaHash[indice], valueToInsert );
@@ -135,7 +152,7 @@ int main(){
             printf("Ingrese la clave a eliminar: ");
             scanf("%d", &valueToInsert );
 
-            int indice = metodoDivision( valueToInsert );
+            int indice = metodoPlegamiento( valueToInsert );
 
             int deleted = removeElementFromTable( &tablaHash[ indice ], valueToInsert );
             if( deleted ) {
@@ -149,7 +166,7 @@ int main(){
             printf("Ingrese la clave a buscar: ");
             scanf("%d", &key );
 
-            int indice = metodoDivision( key );
+            int indice = metodoPlegamiento( key );
             Nodo *inicio = tablaHash[ indice ];
 
             while( inicio != NULL && inicio -> valor != key )
@@ -163,11 +180,9 @@ int main(){
 
         if( option == 4 ) {            
             for( i = 0; i < m; i++ ) {
-                
                 Nodo *aux = tablaHash[i];
-                
                 if( aux != NULL ) {
-                    printf("Indice %d:", i );
+                    printf("Indice: %d", i );
 
                     while( aux != NULL ) {
                         printf(" -> %d ", aux -> valor );
